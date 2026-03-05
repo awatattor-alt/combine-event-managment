@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket } from 'lucide-vue-next';
+import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, Ticket } from 'lucide-vue-next';
 import { useUserStore } from '../store/userStore';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const setLocale = inject<any>('setLocale');
-const router = useRouter();
 const userStore = useUserStore();
 
 const navItems = computed(() => {
@@ -43,10 +41,10 @@ const languages = [
           <router-link to="/" class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             Iraq Compass
           </router-link>
-          
+
           <div class="hidden md:flex gap-6">
-            <router-link 
-              v-for="item in navItems" 
+            <router-link
+              v-for="item in navItems"
               :key="item.path"
               :to="item.path"
               class="text-slate-600 hover:text-emerald-600 transition-colors flex items-center gap-2 text-sm font-medium"
@@ -60,8 +58,8 @@ const languages = [
 
         <div class="flex items-center gap-6">
           <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg">
-            <button 
-              v-for="lang in languages" 
+            <button
+              v-for="lang in languages"
               :key="lang.code"
               @click="setLocale(lang.code)"
               :class="[
