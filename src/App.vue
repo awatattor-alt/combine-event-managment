@@ -1,29 +1,26 @@
 <script setup lang="ts">
-import { ref, provide, computed, onMounted } from 'vue';
+import { provide, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
 import Toast from './components/Toast.vue';
 import { useEventStore } from './store/eventStore';
-import en from './locales/en.json';
-import ar from './locales/ar.json';
-import ku from './locales/ku.json';
+import { useUIStore } from './store/uiStore';
+import { useLanguageStore } from './store/languageStore';
 
-const locale = ref(localStorage.getItem('locale') || 'en');
-const translations = { en, ar, ku };
 const eventStore = useEventStore();
+const uiStore = useUIStore();
+const languageStore = useLanguageStore();
 
-const t = computed(() => translations[locale.value as keyof typeof translations]);
-
-const toast = ref({ show: false, message: '', type: 'success' as 'success' | 'error' });
-const showToast = (message: string, type: 'success' | 'error' = 'success') => {
-  toast.value = { show: true, message, type };
-};
+const t = languageStore.t;
+const locale = languageStore.locale;
 
 const setLocale = (newLocale: string) => {
-  locale.value = newLocale;
-  localStorage.setItem('locale', newLocale);
-  document.dir = (newLocale === 'ar' || newLocale === 'ku') ? 'rtl' : 'ltr';
+  languageStore.setLocale(newLocale as 'en' | 'ar' | 'ku');
+};
+
+const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+  uiStore.showToast(message, type);
 };
 
 const route = useRoute();
@@ -35,13 +32,12 @@ provide('setLocale', setLocale);
 provide('showToast', showToast);
 
 onMounted(async () => {
-  document.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
   await eventStore.fetchInitialData();
 });
 </script>
 
 <template>
-  <div :class="['min-h-screen bg-slate-50 font-sans', (locale === 'ar' || locale === 'ku') ? 'font-arabic' : '']">
+  <div :class="['min-h-screen bg-slate-50 font-sans', languageStore.isRTL ? 'font-arabic' : '']">
     <Navbar v-if="!isDashboard" />
     <main>
       <router-view v-slot="{ Component }">
@@ -50,6 +46,12 @@ onMounted(async () => {
         </transition>
       </router-view>
     </main>
+    <Toast
+      :show="uiStore.toast.show"
+      :message="uiStore.toast.message"
+      :type="uiStore.toast.type"
+      @close="uiStore.hideToast"
+    />
     <Footer v-if="!isDashboard" />
     <Toast :show="toast.show" :message="toast.message" :type="toast.type" @close="toast.show = false" />
   </div>

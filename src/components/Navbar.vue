@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { inject, computed } from 'vue';
+import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, Ticket } from 'lucide-vue-next';
 import { inject, computed, ref } from 'vue';
 import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Ticket, Menu, X } from 'lucide-vue-next';
 import { useUserStore } from '../store/userStore';
@@ -43,6 +45,7 @@ const languages = [
             Iraq Compass
           </router-link>
 
+          <div class="hidden md:flex gap-6">
           <div class="hidden lg:flex gap-5">
             <router-link
               v-for="item in navItems"
