@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { Calendar, MapPin, User } from 'lucide-vue-next';
+import { Calendar, MapPin } from 'lucide-vue-next';
 
 import { useEventStore } from '../store/eventStore';
 
 const props = defineProps<{
   event: any;
+}>();
+
+const emit = defineEmits<{
+  (e: 'open-preview', event: any): void;
 }>();
 
 const t = inject<any>('t');
@@ -38,7 +42,10 @@ const formatDate = (dateStr: string) => {
 </script>
 
 <template>
-  <div class="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+  <article
+    class="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-emerald-200 hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300 cursor-pointer"
+    @click="emit('open-preview', event)"
+  >
     <div class="relative aspect-[4/3] overflow-hidden">
       <img 
         :src="event.image" 
@@ -76,10 +83,11 @@ const formatDate = (dateStr: string) => {
         <router-link 
           :to="`/events/${event.id}`"
           class="px-4 py-2 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition-colors"
+          @click.stop
         >
           {{ t.event.getTickets }}
         </router-link>
       </div>
     </div>
-  </div>
+  </article>
 </template>
