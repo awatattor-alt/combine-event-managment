@@ -5,6 +5,9 @@ import { useFilterStore } from '../store/filterStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
+import EventList from '../components/EventList.vue';
+import BaseButton from '../components/BaseButton.vue';
+import BaseModal from '../components/BaseModal.vue';
 import { paginate } from '../utils/pagination';
 
 const t = inject<any>('t');
@@ -14,24 +17,30 @@ const filterStore = useFilterStore();
 
 const perPage = 8;
 const currentPage = ref(1);
+const showInfoModal = ref(false);
 
-const paginatedEvents = computed(() => {
-  return paginate(store.filteredEvents, currentPage.value, perPage);
-});
-
-const hasMore = computed(() => {
-  return paginatedEvents.value.length < store.filteredEvents.length;
-});
+const paginatedEvents = computed(() => paginate(store.filteredEvents, currentPage.value, perPage));
+const hasMore = computed(() => paginatedEvents.value.length < store.filteredEvents.length);
 
 const loadMore = () => {
   currentPage.value++;
+};
+
+const clearFilters = () => {
+  store.searchQuery = '';
+  store.selectedCity = '';
+  store.selectedCategory = '';
 };
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-12">
-      <h1 class="text-4xl font-bold text-slate-900 mb-4">{{ t.nav.events }}</h1>
+    <div class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-4xl font-bold text-slate-900">{{ t.nav.events }}</h1>
+      <BaseButton variant="secondary" @click="showInfoModal = true">{{ t.common.mockData }}</BaseButton>
+    </div>
+
+    <div class="mb-8">
       <FilterBar />
     </div>
 
@@ -51,6 +60,9 @@ const loadMore = () => {
         >
           {{ locale === 'en' ? 'Load More Events' : (locale === 'ar' ? 'تحميل المزيد من الفعاليات' : 'بارکردنی چالاکیی زیاتر') }}
         </button>
+      <EventList :events="paginatedEvents" columns="four" />
+      <div v-if="hasMore" class="mt-16 text-center">
+        <BaseButton variant="secondary" size="lg" @click="loadMore">{{ t.common.loadMore }}</BaseButton>
       </div>
     </div>
 
@@ -64,6 +76,12 @@ const loadMore = () => {
       >
         {{ locale === 'en' ? 'Clear all filters' : (locale === 'ar' ? 'مسح كل الفلاتر' : 'پاککردنەوەی هەموو فلتەرەکان') }}
       </button>
+      <p class="text-slate-500">{{ t.common.tryFilters }}</p>
+      <BaseButton class="mt-6" @click="clearFilters">{{ t.common.clearFilters }}</BaseButton>
     </div>
+
+    <BaseModal :open="showInfoModal" :title="t.common.mockData" @close="showInfoModal = false">
+      <p class="text-slate-600">{{ t.common.mockDataDescription }}</p>
+    </BaseModal>
   </div>
 </template>

@@ -10,6 +10,10 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export const getEvents = async () => {
   await delay(500);
   return [...mockEvents];
+
+export const getEvents = async () => {
+  await new Promise(resolve => setTimeout(resolve, 500));
+  return eventsData;
 };
 
 export const getEventById = async (id: string) => {
@@ -26,6 +30,9 @@ export const getCategories = async () => {
   await delay(250);
   return categoriesData;
 };
+export const getCities = async () => citiesData;
+export const getCategories = async () => categoriesData;
+export const getOrganizers = async () => organizersData;
 
 export const createEvent = async (event: any) => {
   await delay(800);
