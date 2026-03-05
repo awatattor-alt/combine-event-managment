@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue';
+import { inject, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEventStore } from '../store/eventStore';
 import { useUserStore } from '../store/userStore';
@@ -16,7 +16,7 @@ const event = computed(() => store.events.find(e => e.id === route.params.id));
 const organizer = computed(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers.find(o => o.id === currentEvent.organizerId);
+  return store.organizers.find((organizerItem) => organizerItem.id === currentEvent.organizerId);
 });
 
 const relatedEvents = computed(() => {
@@ -26,9 +26,6 @@ const relatedEvents = computed(() => {
     .filter(e => e.category === currentEvent.category && e.id !== currentEvent.id)
     .slice(0, 3);
 });
-
-const showTicketModal = ref(false);
-const reservationSuccess = ref(false);
 
 const getCategoryName = (catId: string) => {
   const cat = store.categories.find(c => c.id === catId);
@@ -57,11 +54,19 @@ const formatDate = (dateStr: string) => {
   });
 };
 
+
+onMounted(async () => {
+  if (!store.events.length) {
+    await store.fetchInitialData();
+  }
+});
+
 const handleReserve = () => {
   if (!userStore.isAuthenticated) {
     router.push('/login');
     return;
   }
+  if (!event.value) return;
   router.push(`/checkout/${event.value.id}`);
 };
 </script>
@@ -192,6 +197,20 @@ const handleReserve = () => {
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div v-else class="max-w-3xl mx-auto px-4 py-24 text-center">
+    <div class="bg-white border border-slate-200 rounded-3xl p-10 shadow-sm">
+      <Info :size="40" class="mx-auto text-slate-400 mb-4" />
+      <h1 class="text-2xl font-bold text-slate-900 mb-2">
+        {{ locale === 'en' ? 'Event not found' : (locale === 'ar' ? 'لم يتم العثور على الفعالية' : 'چالاکی نەدۆزرایەوە') }}
+      </h1>
+      <p class="text-slate-500 mb-6">
+        {{ locale === 'en' ? 'The event may have been removed or the link is invalid.' : (locale === 'ar' ? 'قد تكون الفعالية قد حُذفت أو الرابط غير صالح.' : 'لەوانەیە چالاکییەکە سڕدرابێت یان بەستەرەکە دروست نەبێت.') }}
+      </p>
+      <router-link to="/events" class="inline-flex px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-colors">
+        {{ locale === 'en' ? 'Browse events' : (locale === 'ar' ? 'تصفح الفعاليات' : 'بینینی چالاکییەکان') }}
+      </router-link>
     </div>
   </div>
 </template>
