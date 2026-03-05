@@ -4,6 +4,9 @@ import { Calendar, MapPin, User } from 'lucide-vue-next';
 
 import { useEventStore } from '../store/eventStore';
 
+/**
+ * Reusable event preview card.
+ */
 const props = defineProps<{
   event: any;
 }>();

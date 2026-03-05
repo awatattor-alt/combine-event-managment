@@ -8,6 +8,12 @@ import en from './locales/en.json';
 import ar from './locales/ar.json';
 import ku from './locales/ku.json';
 
+/**
+ * Root application shell.
+ *
+ * Provides localization and toast helpers to all pages/components and loads
+ * initial event data, matching the contract expected by API-backed stores.
+ */
 const locale = ref(localStorage.getItem('locale') || 'en');
 const translations = { en, ar, ku };
 const eventStore = useEventStore();

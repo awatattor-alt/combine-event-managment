@@ -3,6 +3,9 @@
 </template>
 
 <script setup lang="ts">
+/**
+ * Simple skeleton placeholder block.
+ */
 defineProps<{
   className?: string;
 }>();

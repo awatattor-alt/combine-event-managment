@@ -1,11 +1,18 @@
 import { defineStore } from 'pinia';
 import * as eventApi from '../mock/events';
 
+/**
+ * Central event store for all event listing and filtering state.
+ *
+ * The store calls API-like methods from `src/mock/events.ts` so data retrieval
+ * can be switched to backend endpoints with minimal refactoring.
+ */
 export const useEventStore = defineStore('events', {
   state: () => ({
     events: [] as any[],
     cities: [] as any[],
     categories: [] as any[],
+    organizers: [] as any[],
     loading: false,
     error: null as string | null,
     searchQuery: '',
@@ -26,14 +33,16 @@ export const useEventStore = defineStore('events', {
     async fetchInitialData() {
       this.loading = true;
       try {
-        const [events, cities, categories] = await Promise.all([
+        const [events, cities, categories, organizers] = await Promise.all([
           eventApi.getEvents(),
           eventApi.getCities(),
-          eventApi.getCategories()
+          eventApi.getCategories(),
+          eventApi.getOrganizers()
         ]);
         this.events = events;
         this.cities = cities;
         this.categories = categories;
+        this.organizers = organizers;
       } catch (err: any) {
         this.error = err.message;
       } finally {

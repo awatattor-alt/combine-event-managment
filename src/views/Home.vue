@@ -5,6 +5,9 @@ import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 import { ArrowRight, Sparkles } from 'lucide-vue-next';
 
+/**
+ * Home page highlighting featured events and discovery actions.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const store = useEventStore();

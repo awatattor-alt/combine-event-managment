@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue';
+import { inject, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEventStore } from '../store/eventStore';
 import { useUserStore } from '../store/userStore';
-import { Calendar, MapPin, User, Share2, Heart, Ticket, Info } from 'lucide-vue-next';
+import { Calendar, MapPin, User, Share2, Heart, Ticket } from 'lucide-vue-next';
+
+/**
+ * Event details page with event metadata, reservation entrypoint, and related events.
+ */
 
 const route = useRoute();
 const router = useRouter();
@@ -16,7 +20,7 @@ const event = computed(() => store.events.find(e => e.id === route.params.id));
 const organizer = computed(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers.find(o => o.id === currentEvent.organizerId);
+  return store.organizers.find((organizerItem) => organizerItem.id === currentEvent.organizerId);
 });
 
 const relatedEvents = computed(() => {
@@ -26,9 +30,6 @@ const relatedEvents = computed(() => {
     .filter(e => e.category === currentEvent.category && e.id !== currentEvent.id)
     .slice(0, 3);
 });
-
-const showTicketModal = ref(false);
-const reservationSuccess = ref(false);
 
 const getCategoryName = (catId: string) => {
   const cat = store.categories.find(c => c.id === catId);
@@ -58,6 +59,7 @@ const formatDate = (dateStr: string) => {
 };
 
 const handleReserve = () => {
+  if (!event.value) return;
   if (!userStore.isAuthenticated) {
     router.push('/login');
     return;
