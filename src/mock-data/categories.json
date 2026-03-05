@@ -1,0 +1,9 @@
+[
+  { "id": "cat1", "name": "Music", "nameAr": "موسيقى", "nameKu": "مۆسیقا" },
+  { "id": "cat2", "name": "Tech", "nameAr": "تكنولوجيا", "nameKu": "تەکنەلۆژیا" },
+  { "id": "cat3", "name": "Culture", "nameAr": "ثقافة", "nameKu": "کولتور" },
+  { "id": "cat4", "name": "Food", "nameAr": "طعام", "nameKu": "خواردن" },
+  { "id": "cat5", "name": "Education", "nameAr": "تعليم", "nameKu": "پەروەردە" },
+  { "id": "cat6", "name": "Sports", "nameAr": "رياضة", "nameKu": "وەرزش" },
+  { "id": "cat7", "name": "Business", "nameAr": "أعمال", "nameKu": "بزنس" }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "combine-event-managment",
+  "description": "A unified, high-performance event discovery platform for Iraq, covering all 18 governorates with multilingual support and organizer dashboards.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}

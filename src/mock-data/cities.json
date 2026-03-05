@@ -1,0 +1,20 @@
+[
+  { "id": "baghdad", "name": "Baghdad", "nameAr": "بغداد", "nameKu": "بەغدا" },
+  { "id": "erbil", "name": "Erbil", "nameAr": "أربيل", "nameKu": "هەولێر" },
+  { "id": "sulaymaniyah", "name": "Sulaymaniyah", "nameAr": "السليمانية", "nameKu": "سلێمانی" },
+  { "id": "basra", "name": "Basra", "nameAr": "البصرة", "nameKu": "بەسرە" },
+  { "id": "mosul", "name": "Mosul", "nameAr": "الموصل", "nameKu": "مووسڵ" },
+  { "id": "najaf", "name": "Najaf", "nameAr": "النجف", "nameKu": "نەجەف" },
+  { "id": "karbala", "name": "Karbala", "nameAr": "كربلاء", "nameKu": "کەربەلا" },
+  { "id": "kirkuk", "name": "Kirkuk", "nameAr": "كركوك", "nameKu": "کەرکووک" },
+  { "id": "ramadi", "name": "Ramadi", "nameAr": "الرمادي", "nameKu": "ڕەمادی" },
+  { "id": "baqubah", "name": "Baqubah", "nameAr": "بعقوبة", "nameKu": "بەعقووبە" },
+  { "id": "hillah", "name": "Hillah", "nameAr": "الحلة", "nameKu": "حلە" },
+  { "id": "amarah", "name": "Amarah", "nameAr": "العمارة", "nameKu": "عەمارە" },
+  { "id": "nasiriyah", "name": "Nasiriyah", "nameAr": "الناصرية", "nameKu": "ناسریە" },
+  { "id": "samawah", "name": "Samawah", "nameAr": "السماوة", "nameKu": "سەماوە" },
+  { "id": "diwaniyah", "name": "Diwaniyah", "nameAr": "الديوانية", "nameKu": "دیوانیە" },
+  { "id": "tikrit", "name": "Tikrit", "nameAr": "تكريت", "nameKu": "تکریت" },
+  { "id": "dohuk", "name": "Dohuk", "nameAr": "دهوك", "nameKu": "دهۆک" },
+  { "id": "halabja", "name": "Halabja", "nameAr": "حلبجة", "nameKu": "هەڵەبجە" }
+]

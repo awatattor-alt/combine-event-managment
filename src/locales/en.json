@@ -1,0 +1,75 @@
+{
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "map": "Map",
+    "dashboard": "Dashboard",
+    "admin": "Admin"
+  },
+  "hero": {
+    "title": "Discover Iraq's Vibrant Events",
+    "subtitle": "From cultural festivals to tech summits, find what's happening across all 18 governorates."
+  },
+  "filters": {
+    "city": "City",
+    "category": "Category",
+    "search": "Search events...",
+    "all": "All"
+  },
+  "event": {
+    "getTickets": "Get Tickets",
+    "free": "Free",
+    "organizer": "Organizer",
+    "venue": "Venue",
+    "date": "Date",
+    "time": "Time",
+    "price": "Price",
+    "availability": "Availability",
+    "related": "Related Events",
+    "ticketsLeft": "tickets left"
+  },
+  "dashboard": {
+    "overview": "Overview",
+    "myEvents": "My Events",
+    "createEvent": "Create Event",
+    "editEvent": "Edit Event",
+    "stats": {
+      "totalEvents": "Total Events",
+      "totalAttendees": "Total Attendees",
+      "revenue": "Revenue"
+    },
+    "table": {
+      "event": "Event",
+      "date": "Date",
+      "status": "Status",
+      "tickets": "Tickets",
+      "actions": "Actions"
+    },
+    "form": {
+      "title": "Event Title",
+      "description": "Description",
+      "category": "Category",
+      "city": "City",
+      "venue": "Venue Name",
+      "dateTime": "Date & Time",
+      "price": "Ticket Price (IQD)",
+      "totalTickets": "Total Tickets Available",
+      "media": "Event Media",
+      "upload": "Upload Event Banner",
+      "uploadHint": "Recommended size: 1200x600px (Max 5MB)"
+    }
+  },
+  "common": {
+    "save": "Save Changes",
+    "cancel": "Cancel",
+    "create": "Create Event",
+    "publish": "Publish Event",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "back": "Back",
+    "signOut": "Sign Out",
+    "loading": "Loading...",
+    "noResults": "No events found matching your criteria."
+  }
+}
