@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue';
+import { inject, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useEventStore } from '../store/eventStore';
 import { useUserStore } from '../store/userStore';
-import { Calendar, MapPin, User, Share2, Heart, Ticket, Info } from 'lucide-vue-next';
+import { Calendar, MapPin, User, Share2, Heart, Ticket } from 'lucide-vue-next';
 
 const route = useRoute();
 const router = useRouter();
@@ -16,7 +16,7 @@ const event = computed(() => store.events.find(e => e.id === route.params.id));
 const organizer = computed(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers.find(o => o.id === currentEvent.organizerId);
+  return store.getOrganizerById(currentEvent.organizerId) ?? null;
 });
 
 const relatedEvents = computed(() => {
@@ -26,9 +26,6 @@ const relatedEvents = computed(() => {
     .filter(e => e.category === currentEvent.category && e.id !== currentEvent.id)
     .slice(0, 3);
 });
-
-const showTicketModal = ref(false);
-const reservationSuccess = ref(false);
 
 const getCategoryName = (catId: string) => {
   const cat = store.categories.find(c => c.id === catId);
@@ -62,6 +59,7 @@ const handleReserve = () => {
     router.push('/login');
     return;
   }
+  if (!event.value) return;
   router.push(`/checkout/${event.value.id}`);
 };
 </script>
@@ -194,4 +192,17 @@ const handleReserve = () => {
       </div>
     </div>
   </div>
+
+  <div v-else class="max-w-3xl mx-auto px-4 py-16 text-center">
+    <h1 class="text-2xl font-bold text-slate-900 mb-3">
+      {{ locale === 'en' ? 'Event not found' : (locale === 'ar' ? 'الفعالية غير موجودة' : 'چالاکی نەدۆزرایەوە') }}
+    </h1>
+    <p class="text-slate-600 mb-6">
+      {{ locale === 'en' ? 'The event may have been removed or the link is invalid.' : (locale === 'ar' ? 'ربما تمت إزالة الفعالية أو أن الرابط غير صالح.' : 'لەوانەیە چالاکییەکە سڕدرابێت یان بەستەرەکە هەڵە بێت.') }}
+    </p>
+    <router-link to="/events" class="inline-flex items-center rounded-xl bg-emerald-600 px-5 py-3 text-white font-semibold hover:bg-emerald-700 transition-colors">
+      {{ locale === 'en' ? 'Browse events' : (locale === 'ar' ? 'تصفح الفعاليات' : 'چالاکییەکان ببینە') }}
+    </router-link>
+  </div>
+
 </template>
