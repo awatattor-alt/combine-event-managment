@@ -3,6 +3,9 @@ import citiesData from '../mock-data/cities.json';
 import categoriesData from '../mock-data/categories.json';
 import organizersData from '../mock-data/organizers.json';
 
+export const getEvents = async () => {
+  await new Promise((resolve) => setTimeout(resolve, 500));
+
 const mockEvents = [...eventsData];
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -17,6 +20,8 @@ export const getEvents = async () => {
 };
 
 export const getEventById = async (id: string) => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  return eventsData.find((e) => e.id === id);
   await delay(300);
   return mockEvents.find((event) => event.id === id) || null;
 };
@@ -35,6 +40,8 @@ export const getCategories = async () => categoriesData;
 export const getOrganizers = async () => organizersData;
 
 export const createEvent = async (event: any) => {
+  await new Promise((resolve) => setTimeout(resolve, 800));
+  return { ...event, id: Math.random().toString(36).substr(2, 9) };
   await delay(800);
   const createdEvent = { ...event, id: Math.random().toString(36).slice(2, 11) };
   mockEvents.unshift(createdEvent);

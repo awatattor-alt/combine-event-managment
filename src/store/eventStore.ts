@@ -13,6 +13,12 @@ export const useEventStore = defineStore('events', {
     searchQuery: '',
     selectedCity: '',
     selectedCategory: '',
+    sortBy: 'date'
+  }),
+  getters: {
+    filteredEvents: (state) => {
+      const filtered = state.events.filter((event) => {
+        const matchesSearch = event.title.toLowerCase().includes(state.searchQuery.toLowerCase());
     selectedSort: 'date-asc',
   }),
   getters: {
@@ -29,6 +35,8 @@ export const useEventStore = defineStore('events', {
         return matchesSearch && matchesCity && matchesCategory;
       });
 
+      if (state.sortBy === 'price') return [...filtered].sort((a, b) => a.price - b.price);
+      return [...filtered].sort((a, b) => +new Date(a.date) - +new Date(b.date));
       const sorted = [...filtered];
       switch (state.selectedSort) {
         case 'date-desc':
@@ -66,6 +74,7 @@ export const useEventStore = defineStore('events', {
       this.loading = true;
       this.error = null;
       try {
+        const [events, cities, categories, organizers] = await Promise.all([eventApi.getEvents(), eventApi.getCities(), eventApi.getCategories(), eventApi.getOrganizers()]);
         const [events, cities, categories, organizers] = await Promise.all([
           eventApi.getEvents(),
           eventApi.getCities(),
@@ -105,6 +114,18 @@ export const useEventStore = defineStore('events', {
         this.loading = false;
       }
     },
+    setFilters(payload: { query?: string; city?: string; category?: string; sortBy?: string }) {
+      this.searchQuery = payload.query ?? this.searchQuery;
+      this.selectedCity = payload.city ?? this.selectedCity;
+      this.selectedCategory = payload.category ?? this.selectedCategory;
+      this.sortBy = payload.sortBy ?? this.sortBy;
+    },
+    resetFilters() {
+      this.searchQuery = '';
+      this.selectedCity = '';
+      this.selectedCategory = '';
+      this.sortBy = 'date';
+    },
     async addEvent(event: any) {
       this.loading = true;
       this.error = null;
@@ -121,6 +142,13 @@ export const useEventStore = defineStore('events', {
       }
     },
     updateEvent(updatedEvent: any) {
+      const index = this.events.findIndex((e) => e.id === updatedEvent.id);
+      if (index !== -1) this.events[index] = updatedEvent;
+    },
+    deleteEvent(id: string) {
+      this.events = this.events.filter((e) => e.id !== id);
+    }
+  }
       const index = this.events.findIndex(e => e.id === updatedEvent.id);
       if (index !== -1) {
         this.events[index] = { ...updatedEvent };
