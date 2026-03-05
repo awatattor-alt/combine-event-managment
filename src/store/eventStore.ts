@@ -10,6 +10,45 @@ export const useEventStore = defineStore('events', {
     organizers: [] as any[],
     loading: false,
     error: null as string | null,
+    searchQuery: '',
+    selectedCity: '',
+    selectedCategory: '',
+    selectedSort: 'date-asc',
+  }),
+  getters: {
+    filteredEvents: (state) => {
+      const query = state.searchQuery.trim().toLowerCase();
+      const filtered = state.events.filter((event) => {
+        const matchesSearch =
+          !query ||
+          event.title.toLowerCase().includes(query) ||
+          event.description.toLowerCase().includes(query) ||
+          event.venue.toLowerCase().includes(query);
+        const matchesCity = !state.selectedCity || event.city === state.selectedCity;
+        const matchesCategory = !state.selectedCategory || event.category === state.selectedCategory;
+        return matchesSearch && matchesCity && matchesCategory;
+      });
+
+      const sorted = [...filtered];
+      switch (state.selectedSort) {
+        case 'date-desc':
+          sorted.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          break;
+        case 'price-asc':
+          sorted.sort((a, b) => Number(a.price) - Number(b.price));
+          break;
+        case 'price-desc':
+          sorted.sort((a, b) => Number(b.price) - Number(a.price));
+          break;
+        case 'title-asc':
+          sorted.sort((a, b) => a.title.localeCompare(b.title));
+          break;
+        default:
+          sorted.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+      }
+
+      return sorted;
+    }
   }),
   getters: {
     filteredEvents: (state) => {
@@ -71,13 +110,23 @@ export const useEventStore = defineStore('events', {
       this.error = null;
       try {
         const newEvent = await eventApi.createEvent(event);
+        this.events.push(newEvent);
+        return newEvent;
         this.events.unshift(newEvent);
       } catch (err: any) {
         this.error = err.message;
+        return null;
       } finally {
         this.loading = false;
       }
     },
+    updateEvent(updatedEvent: any) {
+      const index = this.events.findIndex(e => e.id === updatedEvent.id);
+      if (index !== -1) {
+        this.events[index] = { ...updatedEvent };
+        return true;
+      }
+      return false;
     async updateEvent(updatedEvent: any) {
       this.loading = true;
       this.error = null;
