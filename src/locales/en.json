@@ -4,11 +4,14 @@
     "events": "Events",
     "map": "Map",
     "dashboard": "Dashboard",
-    "admin": "Admin"
+    "admin": "Admin",
+    "tickets": "My Tickets",
+    "menu": "Toggle menu"
   },
   "hero": {
     "title": "Discover Iraq's Vibrant Events",
-    "subtitle": "From cultural festivals to tech summits, find what's happening across all 18 governorates."
+    "subtitle": "From cultural festivals to tech summits, find what's happening across all 18 governorates.",
+    "badge": "Explore Iraq Like Never Before"
   },
   "filters": {
     "city": "City",
@@ -57,7 +60,8 @@
       "media": "Event Media",
       "upload": "Upload Event Banner",
       "uploadHint": "Recommended size: 1200x600px (Max 5MB)"
-    }
+    },
+    "formIntro": "Fill in the details below to publish your event to the platform."
   },
   "common": {
     "save": "Save Changes",
@@ -70,6 +74,29 @@
     "back": "Back",
     "signOut": "Sign Out",
     "loading": "Loading...",
-    "noResults": "No events found matching your criteria."
+    "noResults": "No events found matching your criteria.",
+    "mockData": "About mock data",
+    "mockDataDescription": "All events, contacts, and media shown in this demo are mock placeholders for UI development.",
+    "loadMore": "Load More Events",
+    "tryFilters": "Try adjusting your filters or search query.",
+    "clearFilters": "Clear all filters"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "joinNow": "Join Now"
+  },
+  "footer": {
+    "description": "Your multilingual platform to discover events across Iraq.",
+    "quickLinks": "Quick Links",
+    "contact": "Contact",
+    "mockNotice": "Demo contact info and links are placeholders."
+  },
+  "home": {
+    "featuredTitle": "Featured Events",
+    "featuredSubtitle": "Handpicked experiences you should not miss.",
+    "viewAll": "View all events",
+    "cityTitle": "Explore by City",
+    "citySubtitle": "Discover events in every corner of Iraq.",
+    "eventsCount": "events"
   }
 }
