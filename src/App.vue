@@ -2,14 +2,22 @@
 import { ref, provide, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Navbar from './components/Navbar.vue';
+import Toast from './components/Toast.vue';
+import { useEventStore } from './store/eventStore';
 import en from './locales/en.json';
 import ar from './locales/ar.json';
 import ku from './locales/ku.json';
 
 const locale = ref(localStorage.getItem('locale') || 'en');
 const translations = { en, ar, ku };
+const eventStore = useEventStore();
 
 const t = computed(() => translations[locale.value as keyof typeof translations]);
+
+const toast = ref({ show: false, message: '', type: 'success' as 'success' | 'error' });
+const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+  toast.value = { show: true, message, type };
+};
 
 const setLocale = (newLocale: string) => {
   locale.value = newLocale;
@@ -23,9 +31,11 @@ const isDashboard = computed(() => route.path.startsWith('/dashboard'));
 provide('t', t);
 provide('locale', locale);
 provide('setLocale', setLocale);
+provide('showToast', showToast);
 
-onMounted(() => {
+onMounted(async () => {
   document.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
+  await eventStore.fetchInitialData();
 });
 </script>
 
@@ -39,6 +49,12 @@ onMounted(() => {
         </transition>
       </router-view>
     </main>
+    <Toast 
+      :show="toast.show" 
+      :message="toast.message" 
+      :type="toast.type" 
+      @close="toast.show = false" 
+    />
   </div>
 </template>
 

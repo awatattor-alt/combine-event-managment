@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useEventStore } from '../../store';
+import { useEventStore } from '../../store/eventStore';
 import { ArrowLeft, Upload } from 'lucide-vue-next';
 
 const t = inject<any>('t');

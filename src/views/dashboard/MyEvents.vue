@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { useEventStore } from '../../store';
+import { useEventStore } from '../../store/eventStore';
 import { Edit2, Trash2, ExternalLink, Plus } from 'lucide-vue-next';
 
 const t = inject<any>('t');

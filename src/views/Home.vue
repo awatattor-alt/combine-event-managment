@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { useEventStore } from '../store';
+import { useEventStore } from '../store/eventStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 import { ArrowRight, Sparkles } from 'lucide-vue-next';

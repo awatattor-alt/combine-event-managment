@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { useEventStore } from '../store';
+import { useEventStore } from '../store/eventStore';
 import { Shield, Users, AlertCircle, CheckCircle, XCircle } from 'lucide-vue-next';
 
 const store = useEventStore();

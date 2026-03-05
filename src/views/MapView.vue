@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { inject } from 'vue';
-import { useEventStore } from '../store';
+import { useEventStore } from '../store/eventStore';
 import { MapPin } from 'lucide-vue-next';
 
 const store = useEventStore();

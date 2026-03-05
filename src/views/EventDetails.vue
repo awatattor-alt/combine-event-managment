@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref, inject, computed } from 'vue';
-import { useRoute } from 'vue-router';
-import { useEventStore } from '../store';
+import { useRoute, useRouter } from 'vue-router';
+import { useEventStore } from '../store/eventStore';
+import { useUserStore } from '../store/userStore';
 import { Calendar, MapPin, User, Share2, Heart, Ticket, Info } from 'lucide-vue-next';
 
 const route = useRoute();
+const router = useRouter();
 const store = useEventStore();
+const userStore = useUserStore();
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 
@@ -55,13 +58,11 @@ const formatDate = (dateStr: string) => {
 };
 
 const handleReserve = () => {
-  setTimeout(() => {
-    reservationSuccess.value = true;
-    setTimeout(() => {
-      showTicketModal.value = false;
-      reservationSuccess.value = false;
-    }, 2000);
-  }, 1000);
+  if (!userStore.isAuthenticated) {
+    router.push('/login');
+    return;
+  }
+  router.push(`/checkout/${event.value.id}`);
 };
 </script>
 
@@ -138,7 +139,7 @@ const handleReserve = () => {
             </div>
 
             <button 
-              @click="showTicketModal = true"
+              @click="handleReserve"
               class="w-full py-4 bg-emerald-600 text-white font-bold rounded-2xl hover:bg-emerald-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/10"
             >
               <Ticket :size="20" />
@@ -189,40 +190,6 @@ const handleReserve = () => {
               </div>
             </router-link>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Ticket Modal -->
-    <div v-if="showTicketModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" @click="showTicketModal = false"></div>
-      <div class="bg-white w-full max-w-md rounded-3xl p-8 relative animate-in fade-in zoom-in duration-300">
-        <div v-if="!reservationSuccess">
-          <h3 class="text-2xl font-bold mb-6">{{ locale === 'en' ? 'Complete Reservation' : (locale === 'ar' ? 'إكمال الحجز' : 'تەواوکردنی حیجزکردن') }}</h3>
-          <form @submit.prevent="handleReserve" class="space-y-4">
-            <div>
-              <label class="block text-sm font-bold text-slate-700 mb-2">{{ locale === 'en' ? 'Full Name' : (locale === 'ar' ? 'الاسم الكامل' : 'ناوی تەواو') }}</label>
-              <input type="text" required class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500" />
-            </div>
-            <div>
-              <label class="block text-sm font-bold text-slate-700 mb-2">{{ locale === 'en' ? 'Email Address' : (locale === 'ar' ? 'البريد الإلكتروني' : 'ناونیشانی ئیمەیڵ') }}</label>
-              <input type="email" required class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500" />
-            </div>
-            <div>
-              <label class="block text-sm font-bold text-slate-700 mb-2">{{ locale === 'en' ? 'Phone Number' : (locale === 'ar' ? 'رقم الهاتف' : 'ژمارەی مۆبایل') }}</label>
-              <input type="tel" required class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500" />
-            </div>
-            <button type="submit" class="w-full py-4 bg-emerald-600 text-white font-bold rounded-2xl mt-4">
-              {{ locale === 'en' ? 'Confirm Reservation' : (locale === 'ar' ? 'تأكيد الحجز' : 'پشتڕاستکردنەوەی حیجزکردن') }}
-            </button>
-          </form>
-        </div>
-        <div v-else class="text-center py-10">
-          <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Sparkles :size="40" />
-          </div>
-          <h3 class="text-2xl font-bold text-slate-900 mb-2">{{ locale === 'en' ? 'Success!' : (locale === 'ar' ? 'تم بنجاح!' : 'سەرکەوتوو بوو!') }}</h3>
-          <p class="text-slate-500">{{ locale === 'en' ? 'Your tickets have been sent to your email.' : (locale === 'ar' ? 'تم إرسال تذاكرك إلى بريدك الإلكتروني.' : 'تیکتەکانت بۆ ئیمەیڵەکەت نێردراون.') }}</p>
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { inject, ref, computed } from 'vue';
-import { useEventStore } from '../store';
+import { useEventStore } from '../store/eventStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
+import SkeletonLoader from '../components/SkeletonLoader.vue';
 import { paginate } from '../utils/pagination';
 
 const t = inject<any>('t');
@@ -32,7 +33,11 @@ const loadMore = () => {
       <FilterBar />
     </div>
 
-    <div v-if="paginatedEvents.length > 0">
+    <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <SkeletonLoader v-for="i in 8" :key="i" className="h-64 w-full" />
+    </div>
+
+    <div v-else-if="paginatedEvents.length > 0">
       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <EventCard v-for="event in paginatedEvents" :key="event.id" :event="event" />
       </div>

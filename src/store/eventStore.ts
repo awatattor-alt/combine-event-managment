@@ -1,17 +1,13 @@
 import { defineStore } from 'pinia';
-import eventsData from '../mock-data/events.json';
-import citiesData from '../mock-data/cities.json';
-import categoriesData from '../mock-data/categories.json';
-import venuesData from '../mock-data/venues.json';
-import organizersData from '../mock-data/organizers.json';
+import * as eventApi from '../mock/events';
 
 export const useEventStore = defineStore('events', {
   state: () => ({
-    events: eventsData,
-    cities: citiesData,
-    categories: categoriesData,
-    venues: venuesData,
-    organizers: organizersData,
+    events: [] as any[],
+    cities: [] as any[],
+    categories: [] as any[],
+    loading: false,
+    error: null as string | null,
     searchQuery: '',
     selectedCity: '',
     selectedCategory: '',
@@ -27,8 +23,33 @@ export const useEventStore = defineStore('events', {
     }
   },
   actions: {
-    addEvent(event: any) {
-      this.events.push({ ...event, id: Date.now().toString() });
+    async fetchInitialData() {
+      this.loading = true;
+      try {
+        const [events, cities, categories] = await Promise.all([
+          eventApi.getEvents(),
+          eventApi.getCities(),
+          eventApi.getCategories()
+        ]);
+        this.events = events;
+        this.cities = cities;
+        this.categories = categories;
+      } catch (err: any) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
+    },
+    async addEvent(event: any) {
+      this.loading = true;
+      try {
+        const newEvent = await eventApi.createEvent(event);
+        this.events.push(newEvent);
+      } catch (err: any) {
+        this.error = err.message;
+      } finally {
+        this.loading = false;
+      }
     },
     updateEvent(updatedEvent: any) {
       const index = this.events.findIndex(e => e.id === updatedEvent.id);

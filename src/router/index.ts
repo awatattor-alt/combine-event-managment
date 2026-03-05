@@ -10,11 +10,22 @@ import CreateEvent from '../views/dashboard/CreateEvent.vue';
 import EditEvent from '../views/dashboard/EditEvent.vue';
 import Admin from '../views/Admin.vue';
 
+import Login from '../views/Login.vue';
+import Signup from '../views/Signup.vue';
+import Profile from '../views/Profile.vue';
+import Checkout from '../views/Checkout.vue';
+import MyTickets from '../views/MyTickets.vue';
+
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/events', name: 'Events', component: Events },
   { path: '/events/:id', name: 'EventDetails', component: EventDetails },
   { path: '/map', name: 'Map', component: MapView },
+  { path: '/login', name: 'Login', component: Login },
+  { path: '/signup', name: 'Signup', component: Signup },
+  { path: '/profile', name: 'Profile', component: Profile },
+  { path: '/checkout/:id', name: 'Checkout', component: Checkout },
+  { path: '/tickets', name: 'MyTickets', component: MyTickets },
   { 
     path: '/dashboard', 
     component: DashboardLayout,

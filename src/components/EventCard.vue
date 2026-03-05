@@ -2,7 +2,7 @@
 import { inject } from 'vue';
 import { Calendar, MapPin, User } from 'lucide-vue-next';
 
-import { useEventStore } from '../store';
+import { useEventStore } from '../store/eventStore';
 
 const props = defineProps<{
   event: any;
@@ -13,7 +13,7 @@ const locale = inject<any>('locale');
 const store = useEventStore();
 
 const getCategoryName = (catId: string) => {
-  const cat = store.categories.find(c => c.id === catId);
+  const cat = store.categories.find((c: any) => c.id === catId);
   if (!cat) return catId;
   if (locale.value === 'ar') return cat.nameAr;
   if (locale.value === 'ku') return cat.nameKu;
@@ -21,7 +21,7 @@ const getCategoryName = (catId: string) => {
 };
 
 const getCityName = (cityId: string) => {
-  const city = store.cities.find(c => c.id === cityId);
+  const city = store.cities.find((c: any) => c.id === cityId);
   if (!city) return cityId;
   if (locale.value === 'ar') return city.nameAr;
   if (locale.value === 'ku') return city.nameKu;

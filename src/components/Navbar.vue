@@ -1,20 +1,32 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue';
 import { useRouter } from 'vue-router';
-import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe } from 'lucide-vue-next';
+import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket } from 'lucide-vue-next';
+import { useUserStore } from '../store/userStore';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const setLocale = inject<any>('setLocale');
 const router = useRouter();
+const userStore = useUserStore();
 
-const navItems = computed(() => [
-  { name: t.value.nav.home, path: '/', icon: Globe },
-  { name: t.value.nav.events, path: '/events', icon: Calendar },
-  { name: t.value.nav.map, path: '/map', icon: MapPin },
-  { name: t.value.nav.dashboard, path: '/dashboard', icon: LayoutDashboard },
-  { name: t.value.nav.admin, path: '/admin', icon: ShieldCheck },
-]);
+const navItems = computed(() => {
+  const items = [
+    { name: t.value.nav.home, path: '/', icon: Globe },
+    { name: t.value.nav.events, path: '/events', icon: Calendar },
+    { name: t.value.nav.map, path: '/map', icon: MapPin },
+  ];
+
+  if (userStore.isOrganizer || userStore.isAdmin) {
+    items.push({ name: t.value.nav.dashboard, path: '/dashboard', icon: LayoutDashboard });
+  }
+
+  if (userStore.isAdmin) {
+    items.push({ name: t.value.nav.admin, path: '/admin', icon: ShieldCheck });
+  }
+
+  return items;
+});
 
 const languages = [
   { code: 'en', name: 'English' },
@@ -46,8 +58,8 @@ const languages = [
           </div>
         </div>
 
-        <div class="flex items-center gap-4">
-          <div class="flex bg-slate-100 p-1 rounded-lg">
+        <div class="flex items-center gap-6">
+          <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg">
             <button 
               v-for="lang in languages" 
               :key="lang.code"
@@ -59,6 +71,29 @@ const languages = [
             >
               {{ lang.name }}
             </button>
+          </div>
+
+          <div class="flex items-center gap-3 border-l border-slate-200 pl-6">
+            <template v-if="userStore.isAuthenticated">
+              <router-link to="/tickets" class="p-2 text-slate-600 hover:text-emerald-600 transition-colors relative" title="My Tickets">
+                <Ticket :size="20" />
+                <span class="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white"></span>
+              </router-link>
+              <router-link to="/profile" class="flex items-center gap-2 p-1 pr-3 bg-slate-50 rounded-full hover:bg-slate-100 transition-all">
+                <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                  {{ userStore.user?.name.charAt(0) }}
+                </div>
+                <span class="text-sm font-bold text-slate-700 hidden lg:block">{{ userStore.user?.name }}</span>
+              </router-link>
+            </template>
+            <template v-else>
+              <router-link to="/login" class="text-sm font-bold text-slate-600 hover:text-emerald-600 transition-colors">
+                {{ locale === 'en' ? 'Sign In' : (locale === 'ar' ? 'تسجيل الدخول' : 'چوونە ژوورەوە') }}
+              </router-link>
+              <router-link to="/signup" class="px-5 py-2 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-900/10 hover:bg-emerald-700 transition-all">
+                {{ locale === 'en' ? 'Join Now' : (locale === 'ar' ? 'انضم الآن' : 'ئێستا ببە بە ئەندام') }}
+              </router-link>
+            </template>
           </div>
         </div>
       </div>
