@@ -3,6 +3,9 @@ import { inject } from 'vue';
 import { useUserStore } from '../store/userStore';
 import { User, Mail, Shield, LogOut, Settings } from 'lucide-vue-next';
 
+/**
+ * User profile page.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const userStore = useUserStore();

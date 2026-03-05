@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { useEventStore } from '../../store/eventStore';
 import { ArrowLeft, Upload } from 'lucide-vue-next';
 
+/**
+ * Event creation form page.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const store = useEventStore();

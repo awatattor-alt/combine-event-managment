@@ -4,7 +4,10 @@ import { useEventStore } from '../store/eventStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
-import { paginate } from '../utils/pagination';
+
+/**
+ * Events page with searchable/filterable event list and incremental loading.
+ */
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
@@ -14,7 +17,7 @@ const perPage = 8;
 const currentPage = ref(1);
 
 const paginatedEvents = computed(() => {
-  return paginate(store.filteredEvents, currentPage.value, perPage);
+  return store.filteredEvents.slice(0, currentPage.value * perPage);
 });
 
 const hasMore = computed(() => {

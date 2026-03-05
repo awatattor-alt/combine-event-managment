@@ -6,6 +6,9 @@ import { Ticket, Calendar, MapPin, QrCode } from 'lucide-vue-next';
 import EmptyState from '../components/EmptyState.vue';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
 
+/**
+ * User tickets page.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const ticketStore = useTicketStore();

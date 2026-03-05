@@ -2,6 +2,9 @@
 import { inject } from 'vue';
 import { LayoutDashboard, PlusCircle, List, Settings, LogOut } from 'lucide-vue-next';
 
+/**
+ * Dashboard layout shell with sidebar navigation.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 </script>

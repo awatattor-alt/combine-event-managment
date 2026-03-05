@@ -16,6 +16,10 @@ import Profile from '../views/Profile.vue';
 import Checkout from '../views/Checkout.vue';
 import MyTickets from '../views/MyTickets.vue';
 
+/**
+ * Frontend route map.
+ * Keep route names stable to simplify future backend-driven navigation links.
+ */
 const routes = [
   { path: '/', name: 'Home', component: Home },
   { path: '/events', name: 'Events', component: Events },
