@@ -57,7 +57,10 @@ const featuredEvents = store.events.slice(0, 3);
         </router-link>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div v-if="store.loading" class="text-slate-500">{{ t.common.loading }}</div>
+      <div v-else-if="store.error" class="text-slate-500">{{ store.error }}</div>
+      <div v-else-if="featuredEvents.length === 0" class="text-slate-500">{{ locale === 'en' ? 'No featured events yet' : (locale === 'ar' ? 'لا توجد فعاليات مميزة حالياً' : 'هێشتا هیچ چالاکییەکی دیار نییە') }}</div>
+      <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <EventCard v-for="event in featuredEvents" :key="event.id" :event="event" />
       </div>
     </section>

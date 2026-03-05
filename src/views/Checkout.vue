@@ -6,6 +6,7 @@ import { useTicketStore } from '../store/ticketStore';
 import { useUserStore } from '../store/userStore';
 import { CreditCard, ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-vue-next';
 import Toast from '../components/Toast.vue';
+import { formatIQDCurrency } from '../utils/format';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
@@ -56,7 +57,9 @@ const handleCheckout = async () => {
 
 <template>
   <div class="max-w-4xl mx-auto px-4 py-12">
-    <div v-if="!success && event" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div v-if="eventStore.loading" class="text-center py-20 text-slate-500">{{ t.common.loading }}</div>
+    <div v-else-if="eventStore.error" class="text-center py-20 text-slate-500">{{ eventStore.error }}</div>
+    <div v-else-if="!success && event" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div class="lg:col-span-2 space-y-6">
         <button @click="router.back()" class="flex items-center gap-2 text-slate-500 hover:text-slate-900 transition-colors">
           <ArrowLeft :size="18" /> {{ t.common.back }}
@@ -71,7 +74,7 @@ const handleCheckout = async () => {
               <div>
                 <h3 class="font-bold text-slate-900">{{ event.title }}</h3>
                 <p class="text-sm text-slate-500">{{ event.venue }}, {{ event.city }}</p>
-                <p class="text-sm font-bold text-emerald-600 mt-1">{{ event.price === 0 ? t.event.free : `${event.price.toLocaleString()} IQD` }}</p>
+                <p class="text-sm font-bold text-emerald-600 mt-1">{{ event.price === 0 ? t.event.free : formatIQDCurrency(event.price, locale.value) }}</p>
               </div>
             </div>
 
@@ -107,15 +110,15 @@ const handleCheckout = async () => {
           <div class="space-y-4 mb-6">
             <div class="flex justify-between text-sm">
               <span class="text-slate-500">{{ locale === 'en' ? 'Subtotal' : (locale === 'ar' ? 'المجموع الفرعي' : 'کۆی گشتی') }}</span>
-              <span class="font-medium">{{ totalPrice.toLocaleString() }} IQD</span>
+              <span class="font-medium">{{ formatIQDCurrency(totalPrice, locale.value) }}</span>
             </div>
             <div class="flex justify-between text-sm">
               <span class="text-slate-500">{{ locale === 'en' ? 'Service Fee' : (locale === 'ar' ? 'رسوم الخدمة' : 'کرێی خزمەتگوزاری') }}</span>
-              <span class="font-medium">0 IQD</span>
+              <span class="font-medium">{{ formatIQDCurrency(0, locale.value) }}</span>
             </div>
             <div class="pt-4 border-t border-slate-100 flex justify-between">
               <span class="font-bold text-slate-900">{{ locale === 'en' ? 'Total' : (locale === 'ar' ? 'الإجمالي' : 'کۆی گشتی') }}</span>
-              <span class="font-black text-emerald-600 text-xl">{{ totalPrice.toLocaleString() }} IQD</span>
+              <span class="font-black text-emerald-600 text-xl">{{ formatIQDCurrency(totalPrice, locale.value) }}</span>
             </div>
           </div>
 

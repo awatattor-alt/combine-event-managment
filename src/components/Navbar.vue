@@ -1,13 +1,12 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket } from 'lucide-vue-next';
+import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, Ticket } from 'lucide-vue-next';
 import { useUserStore } from '../store/userStore';
+import { languages } from '../utils/language';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const setLocale = inject<any>('setLocale');
-const router = useRouter();
 const userStore = useUserStore();
 
 const navItems = computed(() => {
@@ -27,12 +26,6 @@ const navItems = computed(() => {
 
   return items;
 });
-
-const languages = [
-  { code: 'en', name: 'English' },
-  { code: 'ar', name: 'العربية' },
-  { code: 'ku', name: 'Kurdî' },
-];
 </script>
 
 <template>
@@ -43,10 +36,10 @@ const languages = [
           <router-link to="/" class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             Iraq Compass
           </router-link>
-          
+
           <div class="hidden md:flex gap-6">
-            <router-link 
-              v-for="item in navItems" 
+            <router-link
+              v-for="item in navItems"
               :key="item.path"
               :to="item.path"
               class="text-slate-600 hover:text-emerald-600 transition-colors flex items-center gap-2 text-sm font-medium"
@@ -60,8 +53,8 @@ const languages = [
 
         <div class="flex items-center gap-6">
           <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg">
-            <button 
-              v-for="lang in languages" 
+            <button
+              v-for="lang in languages"
               :key="lang.code"
               @click="setLocale(lang.code)"
               :class="[
@@ -78,12 +71,6 @@ const languages = [
               <router-link to="/tickets" class="p-2 text-slate-600 hover:text-emerald-600 transition-colors relative" title="My Tickets">
                 <Ticket :size="20" />
                 <span class="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white"></span>
-              </router-link>
-              <router-link to="/profile" class="flex items-center gap-2 p-1 pr-3 bg-slate-50 rounded-full hover:bg-slate-100 transition-all">
-                <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                  {{ userStore.user?.name.charAt(0) }}
-                </div>
-                <span class="text-sm font-bold text-slate-700 hidden lg:block">{{ userStore.user?.name }}</span>
               </router-link>
             </template>
             <template v-else>

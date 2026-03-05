@@ -6,6 +6,7 @@ export const useEventStore = defineStore('events', {
     events: [] as any[],
     cities: [] as any[],
     categories: [] as any[],
+    organizers: [] as any[],
     loading: false,
     error: null as string | null,
     searchQuery: '',
@@ -14,49 +15,53 @@ export const useEventStore = defineStore('events', {
   }),
   getters: {
     filteredEvents: (state) => {
-      return state.events.filter(event => {
+      return state.events.filter((event) => {
         const matchesSearch = event.title.toLowerCase().includes(state.searchQuery.toLowerCase());
         const matchesCity = !state.selectedCity || event.city === state.selectedCity;
         const matchesCategory = !state.selectedCategory || event.category === state.selectedCategory;
         return matchesSearch && matchesCity && matchesCategory;
       });
-    }
+    },
   },
   actions: {
     async fetchInitialData() {
       this.loading = true;
+      this.error = null;
       try {
-        const [events, cities, categories] = await Promise.all([
+        const [events, cities, categories, organizers] = await Promise.all([
           eventApi.getEvents(),
           eventApi.getCities(),
-          eventApi.getCategories()
+          eventApi.getCategories(),
+          eventApi.getOrganizers(),
         ]);
         this.events = events;
         this.cities = cities;
         this.categories = categories;
+        this.organizers = organizers;
       } catch (err: any) {
-        this.error = err.message;
+        this.error = err.message || 'Failed to load mock event data';
       } finally {
         this.loading = false;
       }
     },
     async addEvent(event: any) {
       this.loading = true;
+      this.error = null;
       try {
         const newEvent = await eventApi.createEvent(event);
         this.events.push(newEvent);
       } catch (err: any) {
-        this.error = err.message;
+        this.error = err.message || 'Failed to create event';
       } finally {
         this.loading = false;
       }
     },
     updateEvent(updatedEvent: any) {
-      const index = this.events.findIndex(e => e.id === updatedEvent.id);
+      const index = this.events.findIndex((e) => e.id === updatedEvent.id);
       if (index !== -1) this.events[index] = updatedEvent;
     },
     deleteEvent(id: string) {
-      this.events = this.events.filter(e => e.id !== id);
-    }
-  }
+      this.events = this.events.filter((e) => e.id !== id);
+    },
+  },
 });

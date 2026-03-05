@@ -5,6 +5,7 @@ import { useUserStore } from '../store/userStore';
 import { Ticket, Calendar, MapPin, QrCode } from 'lucide-vue-next';
 import EmptyState from '../components/EmptyState.vue';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
+import { formatDate } from '../utils/format';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
@@ -17,13 +18,6 @@ onMounted(async () => {
   }
 });
 
-const formatDate = (dateStr: string) => {
-  return new Date(dateStr).toLocaleDateString(locale.value === 'ar' ? 'ar-IQ' : 'en-GB', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric'
-  });
-};
 </script>
 
 <template>
@@ -36,6 +30,8 @@ const formatDate = (dateStr: string) => {
     <div v-if="ticketStore.loading" class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <SkeletonLoader v-for="i in 4" :key="i" className="h-48 w-full" />
     </div>
+
+    <div v-else-if="ticketStore.error" class="text-center py-20 text-slate-500">{{ ticketStore.error }}</div>
 
     <div v-else-if="ticketStore.tickets.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div v-for="ticket in ticketStore.tickets" :key="ticket.id" class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden flex flex-col sm:flex-row">
@@ -56,11 +52,11 @@ const formatDate = (dateStr: string) => {
             <div class="space-y-2 mt-4">
               <div class="flex items-center gap-2 text-xs text-slate-500">
                 <Calendar :size="14" class="text-emerald-500" />
-                {{ formatDate(ticket.event?.date) }}
+                {{ formatDate(ticket.event?.date, locale.value) }}
               </div>
               <div class="flex items-center gap-2 text-xs text-slate-500">
                 <MapPin :size="14" class="text-emerald-500" />
-                {{ ticket.event?.venue }}, {{ ticket.event?.city }}
+                {{ ticket.event?.venue }}, {{ ticket.event?.city || 'N/A' }}
               </div>
             </div>
           </div>

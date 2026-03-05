@@ -37,13 +37,19 @@ const loadMore = () => {
       <SkeletonLoader v-for="i in 8" :key="i" className="h-64 w-full" />
     </div>
 
+    <div v-else-if="store.error" class="text-center py-20">
+      <div class="text-6xl mb-4">⚠️</div>
+      <h3 class="text-xl font-bold text-slate-900 mb-2">{{ locale === 'en' ? 'Unable to load events' : (locale === 'ar' ? 'تعذر تحميل الفعاليات' : 'ناتوانرێت چالاکییەکان باربکرێن') }}</h3>
+      <p class="text-slate-500">{{ store.error }}</p>
+    </div>
+
     <div v-else-if="paginatedEvents.length > 0">
       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <EventCard v-for="event in paginatedEvents" :key="event.id" :event="event" />
       </div>
-      
+
       <div v-if="hasMore" class="mt-16 text-center">
-        <button 
+        <button
           @click="loadMore"
           class="px-8 py-3 border border-slate-200 rounded-2xl font-bold text-slate-600 hover:bg-white hover:shadow-md transition-all"
         >
@@ -51,12 +57,12 @@ const loadMore = () => {
         </button>
       </div>
     </div>
-    
+
     <div v-else class="text-center py-20">
       <div class="text-6xl mb-4">🔍</div>
       <h3 class="text-xl font-bold text-slate-900 mb-2">{{ t.common.noResults }}</h3>
       <p class="text-slate-500">{{ locale === 'en' ? 'Try adjusting your filters or search query' : (locale === 'ar' ? 'حاول تعديل الفلاتر أو استعلام البحث' : 'هەوڵ بدە فلتەرەکان یان گەڕانەکەت بگۆڕیت') }}</p>
-      <button 
+      <button
         @click="store.searchQuery = ''; store.selectedCity = ''; store.selectedCategory = ''"
         class="mt-6 px-6 py-2 bg-emerald-600 text-white font-bold rounded-xl"
       >

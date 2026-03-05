@@ -7,8 +7,9 @@ import { useEventStore } from './store/eventStore';
 import en from './locales/en.json';
 import ar from './locales/ar.json';
 import ku from './locales/ku.json';
+import { normalizeLocale, setDocumentDirection } from './utils/language';
 
-const locale = ref(localStorage.getItem('locale') || 'en');
+const locale = ref(normalizeLocale(localStorage.getItem('locale') || 'en'));
 const translations = { en, ar, ku };
 const eventStore = useEventStore();
 
@@ -20,9 +21,9 @@ const showToast = (message: string, type: 'success' | 'error' = 'success') => {
 };
 
 const setLocale = (newLocale: string) => {
-  locale.value = newLocale;
-  localStorage.setItem('locale', newLocale);
-  document.dir = (newLocale === 'ar' || newLocale === 'ku') ? 'rtl' : 'ltr';
+  locale.value = normalizeLocale(newLocale);
+  localStorage.setItem('locale', locale.value);
+  setDocumentDirection(locale.value);
 };
 
 const route = useRoute();
@@ -34,8 +35,12 @@ provide('setLocale', setLocale);
 provide('showToast', showToast);
 
 onMounted(async () => {
-  document.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
+  setDocumentDirection(locale.value);
   await eventStore.fetchInitialData();
+
+  if (eventStore.error) {
+    showToast(eventStore.error, 'error');
+  }
 });
 </script>
 
@@ -49,11 +54,11 @@ onMounted(async () => {
         </transition>
       </router-view>
     </main>
-    <Toast 
-      :show="toast.show" 
-      :message="toast.message" 
-      :type="toast.type" 
-      @close="toast.show = false" 
+    <Toast
+      :show="toast.show"
+      :message="toast.message"
+      :type="toast.type"
+      @close="toast.show = false"
     />
   </div>
 </template>
