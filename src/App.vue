@@ -2,6 +2,7 @@
 import { ref, provide, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 import Toast from './components/Toast.vue';
 import { useEventStore } from './store/eventStore';
 import en from './locales/en.json';
@@ -49,29 +50,19 @@ onMounted(async () => {
         </transition>
       </router-view>
     </main>
-    <Toast 
-      :show="toast.show" 
-      :message="toast.message" 
-      :type="toast.type" 
-      @close="toast.show = false" 
-    />
+    <Footer v-if="!isDashboard" />
+    <Toast :show="toast.show" :message="toast.message" :type="toast.type" @close="toast.show = false" />
   </div>
 </template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
-.font-arabic {
-  font-family: 'Noto Sans Arabic', sans-serif;
-}
+.font-arabic { font-family: 'Noto Sans Arabic', sans-serif; }
 
 .fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-}
+.fade-leave-active { transition: opacity 0.2s ease; }
 
 .fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
+.fade-leave-to { opacity: 0; }
 </style>
