@@ -2,7 +2,8 @@
 import { computed, ref, inject } from 'vue';
 import { useRouter } from 'vue-router';
 import { useEventStore } from '../../store/eventStore';
-import { ArrowLeft, Upload } from 'lucide-vue-next';
+import { ArrowLeft } from 'lucide-vue-next';
+import EventForm from '../../components/EventForm.vue';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
@@ -57,6 +58,9 @@ const handleSubmit = async () => {
   if (!validateForm()) return;
   const created = await store.addEvent(event.value);
   if (created) router.push('/dashboard/my-events');
+const handleSubmit = () => {
+  store.addEvent(event.value);
+  router.push('/dashboard/my-events');
 };
 </script>
 
@@ -67,7 +71,7 @@ const handleSubmit = async () => {
         <ArrowLeft :size="16" /> {{ locale === 'en' ? 'Back to Events' : (locale === 'ar' ? 'العودة إلى الفعاليات' : 'گەڕانەوە بۆ چالاکییەکان') }}
       </router-link>
       <h1 class="text-3xl font-bold text-slate-900 mb-2">{{ t.dashboard.createEvent }}</h1>
-      <p class="text-slate-500">{{ locale === 'en' ? 'Fill in the details below to publish your event to the platform.' : (locale === 'ar' ? 'املأ التفاصيل أدناه لنشر فعاليتك على المنصة.' : 'زانیارییەکانی خوارەوە پڕ بکەرەوە بۆ بڵاوکردنەوەی چالاکییەکەت لە پلاتفۆرمەکەدا.') }}</p>
+      <p class="text-slate-500">{{ t.dashboard.formIntro }}</p>
     </div>
 
     <form @submit.prevent="handleSubmit" class="space-y-8">
@@ -151,5 +155,15 @@ const handleSubmit = async () => {
         </button>
       </div>
     </form>
+    <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
+      <EventForm
+        v-model="event"
+        :categories="store.categories"
+        :cities="store.cities"
+        :submit-label="t.common.publish"
+        @submit="handleSubmit"
+        @cancel="router.back()"
+      />
+    </div>
   </div>
 </template>

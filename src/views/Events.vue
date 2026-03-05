@@ -3,14 +3,19 @@ import { inject, ref, computed, watch } from 'vue';
 import { RouterLink } from 'vue-router';
 import { Calendar, MapPin, X } from 'lucide-vue-next';
 import { useEventStore } from '../store/eventStore';
+import { useFilterStore } from '../store/filterStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
 import SkeletonLoader from '../components/SkeletonLoader.vue';
+import EventList from '../components/EventList.vue';
+import BaseButton from '../components/BaseButton.vue';
+import BaseModal from '../components/BaseModal.vue';
 import { paginate } from '../utils/pagination';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const store = useEventStore();
+const filterStore = useFilterStore();
 
 const perPage = 8;
 const currentPage = ref(1);
@@ -22,14 +27,10 @@ watch(
     currentPage.value = 1;
   }
 );
+const showInfoModal = ref(false);
 
-const paginatedEvents = computed(() => {
-  return paginate(store.filteredEvents, currentPage.value, perPage);
-});
-
-const hasMore = computed(() => {
-  return paginatedEvents.value.length < store.filteredEvents.length;
-});
+const paginatedEvents = computed(() => paginate(store.filteredEvents, currentPage.value, perPage));
+const hasMore = computed(() => paginatedEvents.value.length < store.filteredEvents.length);
 
 const loadMore = () => {
   currentPage.value++;
@@ -56,13 +57,21 @@ const formatDate = (dateStr: string) => {
     month: 'long',
     year: 'numeric'
   });
+const clearFilters = () => {
+  store.searchQuery = '';
+  store.selectedCity = '';
+  store.selectedCategory = '';
 };
 </script>
 
 <template>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="mb-12">
-      <h1 class="text-4xl font-bold text-slate-900 mb-4">{{ t.nav.events }}</h1>
+    <div class="mb-12 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-4xl font-bold text-slate-900">{{ t.nav.events }}</h1>
+      <BaseButton variant="secondary" @click="showInfoModal = true">{{ t.common.mockData }}</BaseButton>
+    </div>
+
+    <div class="mb-8">
       <FilterBar />
     </div>
 
@@ -74,27 +83,34 @@ const formatDate = (dateStr: string) => {
       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
         <EventCard v-for="event in paginatedEvents" :key="event.id" :event="event" @open-preview="selectedEvent = $event" />
       </div>
-      
+
       <div v-if="hasMore" class="mt-16 text-center">
-        <button 
+        <button
           @click="loadMore"
           class="px-8 py-3 border border-slate-200 rounded-2xl font-bold text-slate-600 hover:bg-white hover:shadow-md transition-all"
         >
           {{ locale === 'en' ? 'Load More Events' : (locale === 'ar' ? 'تحميل المزيد من الفعاليات' : 'بارکردنی چالاکیی زیاتر') }}
         </button>
+      <EventList :events="paginatedEvents" columns="four" />
+      <div v-if="hasMore" class="mt-16 text-center">
+        <BaseButton variant="secondary" size="lg" @click="loadMore">{{ t.common.loadMore }}</BaseButton>
       </div>
     </div>
-    
+
     <div v-else class="text-center py-20">
       <div class="text-6xl mb-4">🔍</div>
       <h3 class="text-xl font-bold text-slate-900 mb-2">{{ t.common.noResults }}</h3>
       <p class="text-slate-500">{{ locale === 'en' ? 'Try adjusting your filters or search query' : (locale === 'ar' ? 'حاول تعديل الفلاتر أو استعلام البحث' : 'هەوڵ بدە فلتەرەکان یان گەڕانەکەت بگۆڕیت') }}</p>
       <button 
         @click="clearAllFilters"
+      <button
+        @click="filterStore.resetFilters()"
         class="mt-6 px-6 py-2 bg-emerald-600 text-white font-bold rounded-xl"
       >
         {{ locale === 'en' ? 'Clear all filters' : (locale === 'ar' ? 'مسح كل الفلاتر' : 'پاککردنەوەی هەموو فلتەرەکان') }}
       </button>
+      <p class="text-slate-500">{{ t.common.tryFilters }}</p>
+      <BaseButton class="mt-6" @click="clearFilters">{{ t.common.clearFilters }}</BaseButton>
     </div>
 
     <div v-if="selectedEvent" class="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -123,5 +139,8 @@ const formatDate = (dateStr: string) => {
         </div>
       </div>
     </div>
+    <BaseModal :open="showInfoModal" :title="t.common.mockData" @close="showInfoModal = false">
+      <p class="text-slate-600">{{ t.common.mockDataDescription }}</p>
+    </BaseModal>
   </div>
 </template>
