@@ -20,6 +20,8 @@ export const useUserStore = defineStore('user', {
         const user = await userApi.login(credentials);
         this.user = user;
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('mockLoggedIn', 'true');
+        localStorage.setItem('mockRole', user.role);
       } catch (err: any) {
         this.error = err.message;
         throw err;
@@ -34,6 +36,8 @@ export const useUserStore = defineStore('user', {
         const user = await userApi.signup(userData);
         this.user = user;
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('mockLoggedIn', 'true');
+        localStorage.setItem('mockRole', user.role);
       } catch (err: any) {
         this.error = err.message;
         throw err;
@@ -44,6 +48,8 @@ export const useUserStore = defineStore('user', {
     logout() {
       this.user = null;
       localStorage.removeItem('user');
+      localStorage.removeItem('mockLoggedIn');
+      localStorage.removeItem('mockRole');
     }
   }
 });

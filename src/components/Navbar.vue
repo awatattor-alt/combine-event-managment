@@ -1,23 +1,24 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket } from 'lucide-vue-next';
+import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, Ticket, Search, Mail, CirclePlus } from 'lucide-vue-next';
 import { useUserStore } from '../store/userStore';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const setLocale = inject<any>('setLocale');
-const router = useRouter();
 const userStore = useUserStore();
 
 const navItems = computed(() => {
   const items = [
     { name: t.value.nav.home, path: '/', icon: Globe },
     { name: t.value.nav.events, path: '/events', icon: Calendar },
+    { name: locale.value === 'en' ? 'Search' : (locale.value === 'ar' ? 'بحث' : 'گەڕان'), path: '/search', icon: Search },
     { name: t.value.nav.map, path: '/map', icon: MapPin },
+    { name: locale.value === 'en' ? 'Contact' : (locale.value === 'ar' ? 'اتصل بنا' : 'پەیوەندی'), path: '/contact', icon: Mail },
   ];
 
   if (userStore.isOrganizer || userStore.isAdmin) {
+    items.push({ name: locale.value === 'en' ? 'Create Event' : (locale.value === 'ar' ? 'إنشاء فعالية' : 'دروستکردنی چالاکی'), path: '/events/create', icon: CirclePlus });
     items.push({ name: t.value.nav.dashboard, path: '/dashboard', icon: LayoutDashboard });
   }
 
@@ -43,10 +44,10 @@ const languages = [
           <router-link to="/" class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
             Iraq Compass
           </router-link>
-          
+
           <div class="hidden md:flex gap-6">
-            <router-link 
-              v-for="item in navItems" 
+            <router-link
+              v-for="item in navItems"
               :key="item.path"
               :to="item.path"
               class="text-slate-600 hover:text-emerald-600 transition-colors flex items-center gap-2 text-sm font-medium"
@@ -60,8 +61,8 @@ const languages = [
 
         <div class="flex items-center gap-6">
           <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg">
-            <button 
-              v-for="lang in languages" 
+            <button
+              v-for="lang in languages"
               :key="lang.code"
               @click="setLocale(lang.code)"
               :class="[
@@ -90,7 +91,7 @@ const languages = [
               <router-link to="/login" class="text-sm font-bold text-slate-600 hover:text-emerald-600 transition-colors">
                 {{ locale === 'en' ? 'Sign In' : (locale === 'ar' ? 'تسجيل الدخول' : 'چوونە ژوورەوە') }}
               </router-link>
-              <router-link to="/signup" class="px-5 py-2 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-900/10 hover:bg-emerald-700 transition-all">
+              <router-link to="/register" class="px-5 py-2 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-900/10 hover:bg-emerald-700 transition-all">
                 {{ locale === 'en' ? 'Join Now' : (locale === 'ar' ? 'انضم الآن' : 'ئێستا ببە بە ئەندام') }}
               </router-link>
             </template>
