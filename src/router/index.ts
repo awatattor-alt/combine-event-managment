@@ -15,6 +15,8 @@ import RegisterView from '../views/auth/RegisterView.vue';
 import Profile from '../views/Profile.vue';
 import Checkout from '../views/Checkout.vue';
 import MyTickets from '../views/MyTickets.vue';
+import AboutView from '../views/AboutView.vue';
+import NotFoundView from '../views/NotFoundView.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const routes = [
@@ -22,6 +24,7 @@ const routes = [
   { path: '/events', name: 'Events', component: Events },
   { path: '/events/:id', name: 'EventDetails', component: EventDetails },
   { path: '/map', name: 'Map', component: MapView },
+  { path: '/about', name: 'About', component: AboutView },
   { path: '/login', name: 'Login', component: LoginView },
   { path: '/register', name: 'Register', component: RegisterView },
   { path: '/signup', redirect: '/register' },
@@ -39,6 +42,7 @@ const routes = [
     ],
   },
   { path: '/admin', name: 'Admin', component: Admin },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
 ];
 
 const router = createRouter({

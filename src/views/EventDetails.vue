@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, inject, computed } from 'vue';
+import { ref, inject, computed, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, useRouter } from 'vue-router';
 import { useEventStore } from '../store/eventStore';
 import { useUserStore } from '../store/userStore';
-import { Calendar, MapPin, User, Share2, Heart, Ticket, Info, ArrowLeft, Clock, ShieldCheck, ChevronRight } from 'lucide-vue-next';
+import { Calendar, MapPin, Share2, Heart, Ticket, Info, ArrowLeft, Clock, ShieldCheck, ChevronRight } from 'lucide-vue-next';
 import EventCard from '../components/events/EventCard.vue';
-import LoadingSkeleton from '../components/LoadingSkeleton.vue';
+import SkeletonCard from '@/components/ui/SkeletonCard.vue';
+import type { EventItem } from '@/store/eventStore';
 
 const route = useRoute();
 const router = useRouter();
@@ -15,10 +16,19 @@ const userStore = useUserStore();
 const { t, locale } = useI18n();
 
 const event = computed(() => store.events.find(e => e.id === route.params.id));
-const organizer = computed(() => {
+interface OrganizerProfile {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  name_ku: string;
+  verified: boolean;
+  avatar?: string;
+}
+
+const organizer = computed<OrganizerProfile | { name: string } | null>(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers?.find((o: any) => o.id === currentEvent.organizer_id) || { name: currentEvent.organizer_name };
+  return store.organizers?.find((o) => o.id === currentEvent.organizer_id) || { name: currentEvent.organizer_name };
 });
 
 const relatedEvents = computed(() => {
@@ -29,9 +39,20 @@ const relatedEvents = computed(() => {
     .slice(0, 3);
 });
 
-const showTicketModal = ref(false);
-const reservationSuccess = ref(false);
 const isBookmarked = ref(false);
+const isLoading = ref(true);
+
+onMounted(() => {
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 350);
+});
+
+watch(event, (currentEvent: EventItem | undefined) => {
+  if (currentEvent) {
+    document.title = `${currentEvent.title_en} — Iraq Compass`;
+  }
+}, { immediate: true });
 
 const getCategoryName = (catId: string) => {
   const cat = store.categories.find(c => c.id === catId);
@@ -94,19 +115,23 @@ const shareEvent = () => {
 </script>
 
 <template>
-  <div v-if="!event" class="max-w-7xl mx-auto px-4 py-20">
+  <div v-if="isLoading" class="mx-auto max-w-7xl px-4 py-20">
     <div class="space-y-8">
-      <LoadingSkeleton type="text" className="h-12 w-1/2" />
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-        <div class="lg:col-span-2 space-y-6">
-          <LoadingSkeleton type="text" className="h-96 w-full" />
-          <LoadingSkeleton type="text" className="h-40 w-full" />
+      <SkeletonCard class-name="h-12 w-1/2" />
+      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+        <div class="space-y-6 lg:col-span-2">
+          <SkeletonCard class-name="h-80 w-full" />
+          <SkeletonCard class-name="h-60 w-full" />
         </div>
         <div class="space-y-6">
-          <LoadingSkeleton type="text" className="h-64 w-full" />
+          <SkeletonCard class-name="h-64 w-full" />
         </div>
       </div>
     </div>
+  </div>
+
+  <div v-else-if="!event" class="mx-auto max-w-7xl px-4 py-20">
+    <p class="text-center text-slate-500">{{ t('common.no_results') }}</p>
   </div>
 
   <div v-else class="pb-24 bg-[#FFFBF5]">
@@ -117,7 +142,7 @@ const shareEvent = () => {
       
       <div class="absolute top-8 left-0 right-0 z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <button @click="router.back()" class="w-12 h-12 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-white hover:bg-white/20 transition-all">
+          <button @click="router.back()" class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20">
             <ArrowLeft :size="24" :class="locale !== 'en' ? 'rotate-180' : ''" />
           </button>
           <div class="flex gap-3">
@@ -169,7 +194,7 @@ const shareEvent = () => {
             </div>
             
             <!-- Event Highlights -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-12 pt-12 border-t border-slate-50">
+            <div class="mt-12 grid grid-cols-1 gap-6 border-t border-slate-50 pt-12 sm:grid-cols-2">
               <div class="flex items-start gap-4">
                 <div class="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 shrink-0">
                   <Clock :size="24" />
@@ -195,9 +220,9 @@ const shareEvent = () => {
           <div v-if="relatedEvents.length > 0">
             <div class="flex justify-between items-center mb-8">
               <h2 class="text-2xl font-bold text-[#1E3A5F]">{{ t('event.similar') }}</h2>
-              <router-link to="/events" class="text-amber-600 font-bold flex items-center gap-2">
+              <router-link to="/events" class="flex items-center gap-2 font-bold text-amber-600">
                 {{ t('home.view_all') }}
-                <ChevronRight :size="20" />
+                <ChevronRight :size="20" :class="locale !== 'en' ? 'rotate-180' : ''" />
               </router-link>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

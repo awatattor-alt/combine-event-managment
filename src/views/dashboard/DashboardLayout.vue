@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { RouterLink, RouterView, useRoute } from 'vue-router';
 import { LayoutList, PlusCircle, UserRound, LogOut } from 'lucide-vue-next';
@@ -8,6 +8,10 @@ import { useAuthStore } from '@/stores/authStore';
 const { t } = useI18n();
 const route = useRoute();
 const authStore = useAuthStore();
+
+onMounted(() => {
+  document.title = 'My Dashboard — Iraq Compass';
+});
 
 const tabs = [
   { to: '/dashboard', labelKey: 'dashboard.tabs.my_events', icon: LayoutList },
