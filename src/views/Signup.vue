@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '../store/userStore';
 import { UserPlus, Mail, Lock, User, ArrowRight } from 'lucide-vue-next';
 
+/**
+ * Signup page.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const userStore = useUserStore();

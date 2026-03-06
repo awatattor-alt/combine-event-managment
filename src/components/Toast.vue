@@ -10,6 +10,9 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 
+/**
+ * Global toast notification component.
+ */
 const props = defineProps<{
   message: string;
   show: boolean;

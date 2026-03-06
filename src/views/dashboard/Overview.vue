@@ -3,6 +3,9 @@ import { ref, onMounted, inject } from 'vue';
 import { Calendar, Users, TrendingUp } from 'lucide-vue-next';
 import * as d3 from 'd3';
 
+/**
+ * Dashboard overview page with high-level stats and trend chart.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const chartRef = ref<HTMLElement | null>(null);

@@ -3,6 +3,9 @@ import { inject } from 'vue';
 import { useEventStore } from '../store/eventStore';
 import { Search, MapPin, Tag } from 'lucide-vue-next';
 
+/**
+ * Event filtering controls.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const store = useEventStore();
