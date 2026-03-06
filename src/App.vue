@@ -1,42 +1,55 @@
 <script setup lang="ts">
-import { ref, provide, computed, onMounted } from 'vue';
+import { ref, provide, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import Navbar from './components/Navbar.vue';
-import Footer from './components/Footer.vue';
+import { useI18n } from 'vue-i18n';
+import { useLocalStorage } from '@vueuse/core';
+import Navbar from './components/layout/Navbar.vue';
+import Footer from './components/layout/Footer.vue';
 import Toast from './components/Toast.vue';
 import { useEventStore } from './store/eventStore';
-import en from './locales/en.json';
-import ar from './locales/ar.json';
-import ku from './locales/ku.json';
 
-const locale = ref(localStorage.getItem('locale') || 'en');
-const translations = { en, ar, ku };
+const { locale, t } = useI18n();
+const storedLocale = useLocalStorage('locale', 'en');
 const eventStore = useEventStore();
 
-const t = computed(() => translations[locale.value as keyof typeof translations]);
+const toast = ref<{ show: boolean; message: string; type: 'success' | 'error' }>({ 
+  show: false, 
+  message: '', 
+  type: 'success' 
+});
 
-const toast = ref({ show: false, message: '', type: 'success' as 'success' | 'error' });
 const showToast = (message: string, type: 'success' | 'error' = 'success') => {
   toast.value = { show: true, message, type };
 };
 
 const setLocale = (newLocale: string) => {
+  storedLocale.value = newLocale;
   locale.value = newLocale;
-  localStorage.setItem('locale', newLocale);
-  document.dir = (newLocale === 'ar' || newLocale === 'ku') ? 'rtl' : 'ltr';
+  document.documentElement.dir = (newLocale === 'ar' || newLocale === 'ku') ? 'rtl' : 'ltr';
+  document.documentElement.lang = newLocale;
 };
 
 const route = useRoute();
 const isDashboard = computed(() => route.path.startsWith('/dashboard'));
 
+// Provide for legacy components or those not yet refactored
 provide('t', t);
 provide('locale', locale);
 provide('setLocale', setLocale);
 provide('showToast', showToast);
 
 onMounted(async () => {
-  document.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
+  // Sync i18n locale with localStorage
+  locale.value = storedLocale.value;
+  document.documentElement.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
+  document.documentElement.lang = locale.value;
   await eventStore.fetchInitialData();
+});
+
+watch(storedLocale, (newVal) => {
+  locale.value = newVal;
+  document.documentElement.dir = (newVal === 'ar' || newVal === 'ku') ? 'rtl' : 'ltr';
+  document.documentElement.lang = newVal;
 });
 </script>
 

@@ -9,7 +9,7 @@ const currentYear = new Date().getFullYear();
 </script>
 
 <template>
-  <footer class="bg-[#1E3A5F] text-white pt-16 pb-8">
+  <footer class="bg-[#111827] text-white pt-16 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
         <!-- Brand -->
@@ -22,18 +22,18 @@ const currentYear = new Date().getFullYear();
             {{ locale === 'en' ? 'Your ultimate guide to discovering and experiencing the best events across all 18 governorates of Iraq.' : (locale === 'ar' ? 'دليلك النهائي لاكتشاف وتجربة أفضل الفعاليات في جميع محافظات العراق الـ 18.' : 'ڕێبەری کۆتایی تۆ بۆ دۆزینەوە و ئەزموونکردنی باشترین چالاکییەکان لە سەرانسەری ١٨ پارێزگاکەی عێراق.') }}
           </p>
           <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all">
+            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all cursor-pointer">
               <Facebook :size="20" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all">
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all cursor-pointer">
               <Twitter :size="20" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all">
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all cursor-pointer">
               <Instagram :size="20" />
-            </a>
-            <a href="#" class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all">
+            </div>
+            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-amber-500 transition-all cursor-pointer">
               <Youtube :size="20" />
-            </a>
+            </div>
           </div>
         </div>
 
@@ -43,7 +43,6 @@ const currentYear = new Date().getFullYear();
           <ul class="space-y-4 text-white/60 text-sm">
             <li><router-link to="/" class="hover:text-amber-500 transition-colors">{{ t.nav.home }}</router-link></li>
             <li><router-link to="/events" class="hover:text-amber-500 transition-colors">{{ t.nav.events }}</router-link></li>
-            <li><router-link to="/map" class="hover:text-amber-500 transition-colors">{{ t.nav.map }}</router-link></li>
             <li><a href="#" class="hover:text-amber-500 transition-colors">{{ locale === 'en' ? 'About Us' : (locale === 'ar' ? 'من نحن' : 'دەربارەی ئێمە') }}</a></li>
           </ul>
         </div>
@@ -69,16 +68,13 @@ const currentYear = new Date().getFullYear();
             <li class="flex items-center gap-3">
               <span class="text-amber-500">Phone:</span> +964 770 000 0000
             </li>
-            <li class="flex items-center gap-3">
-              <span class="text-amber-500">Office:</span> Baghdad, Al-Mansour
-            </li>
           </ul>
         </div>
       </div>
 
       <!-- Bottom Bar -->
       <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 text-xs">
-        <p>© {{ currentYear }} Iraq Compass. All rights reserved.</p>
+        <p>© 2026 Iraq Compass. All rights reserved.</p>
         <div class="flex gap-6">
           <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" class="hover:text-white transition-colors">Terms of Service</a>

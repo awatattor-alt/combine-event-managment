@@ -16,7 +16,15 @@ export const useEventStore = defineStore('events', {
   getters: {
     filteredEvents: (state) => {
       return state.events.filter(event => {
-        const matchesSearch = event.title.toLowerCase().includes(state.searchQuery.toLowerCase());
+        const query = state.searchQuery.toLowerCase();
+        const matchesSearch = !query || 
+          event.title_en?.toLowerCase().includes(query) || 
+          event.title_ar?.toLowerCase().includes(query) || 
+          event.title_ku?.toLowerCase().includes(query) ||
+          event.description_en?.toLowerCase().includes(query) ||
+          event.description_ar?.toLowerCase().includes(query) ||
+          event.description_ku?.toLowerCase().includes(query);
+          
         const matchesCity = !state.selectedCity || event.city === state.selectedCity;
         const matchesCategory = !state.selectedCategory || event.category === state.selectedCategory;
         return matchesSearch && matchesCity && matchesCategory;

@@ -2,7 +2,7 @@
 import { ref, inject, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket, Compass, Menu, X } from 'lucide-vue-next';
-import { useUserStore } from '../store/userStore';
+import { useUserStore } from '../../store/userStore';
 
 const t = inject<any>('t');
 const locale = inject<any>('locale');
@@ -109,16 +109,31 @@ const closeMenu = () => {
           <!-- Auth / Profile -->
           <div class="flex items-center gap-3 md:border-l md:border-white/10 md:pl-6">
             <template v-if="userStore.isAuthenticated">
-              <router-link to="/tickets" class="p-2 text-white/80 hover:text-white transition-colors relative" title="My Tickets">
-                <Ticket :size="20" />
-                <span class="absolute top-1 right-1 w-2 h-2 bg-amber-500 rounded-full border-2 border-[#1E3A5F]"></span>
-              </router-link>
-              <router-link to="/profile" class="flex items-center gap-2 p-1 pr-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
-                <div class="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                  {{ userStore.user?.name.charAt(0) }}
+              <div class="relative group">
+                <button class="flex items-center gap-2 p-1 pr-3 bg-white/10 rounded-full hover:bg-white/20 transition-all">
+                  <div class="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                    {{ userStore.user?.name.charAt(0) }}
+                  </div>
+                  <span class="text-sm font-bold text-white hidden lg:block">{{ userStore.user?.name }}</span>
+                </button>
+                
+                <!-- Dropdown -->
+                <div class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-50">
+                  <router-link to="/profile" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                    <User :size="16" />
+                    {{ t.profile.settings }}
+                  </router-link>
+                  <router-link to="/tickets" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                    <Ticket :size="16" />
+                    {{ t.profile.my_tickets }}
+                  </router-link>
+                  <div class="h-px bg-slate-100 my-2"></div>
+                  <button @click="userStore.logout(); router.push('/')" class="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
+                    <X :size="16" />
+                    {{ t.nav.logout }}
+                  </button>
                 </div>
-                <span class="text-sm font-bold text-white hidden lg:block">{{ userStore.user?.name }}</span>
-              </router-link>
+              </div>
             </template>
             <template v-else>
               <div class="hidden md:flex items-center gap-4">
@@ -126,7 +141,7 @@ const closeMenu = () => {
                   {{ t.nav.login }}
                 </router-link>
                 <router-link to="/signup" class="px-5 py-2 bg-amber-500 text-white text-sm font-bold rounded-xl shadow-lg shadow-amber-900/20 hover:bg-amber-600 transition-all">
-                  {{ locale === 'en' ? 'Join Now' : (locale === 'ar' ? 'انضم الآن' : 'ئێستا ببە بە ئەندام') }}
+                  {{ t.nav.register }}
                 </router-link>
               </div>
             </template>

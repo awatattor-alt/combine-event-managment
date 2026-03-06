@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '../views/Home.vue';
+import HomeView from '../views/HomeView.vue';
 import Events from '../views/Events.vue';
 import EventDetails from '../views/EventDetails.vue';
 import MapView from '../views/MapView.vue';
@@ -17,7 +17,7 @@ import Checkout from '../views/Checkout.vue';
 import MyTickets from '../views/MyTickets.vue';
 
 const routes = [
-  { path: '/', name: 'Home', component: Home },
+  { path: '/', name: 'Home', component: HomeView },
   { path: '/events', name: 'Events', component: Events },
   { path: '/events/:id', name: 'EventDetails', component: EventDetails },
   { path: '/map', name: 'Map', component: MapView },

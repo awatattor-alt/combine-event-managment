@@ -1,26 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');
 
 :root {
-  /* Colors */
-  --color-primary: #D97706; /* amber-600 */
-  --color-primary-hover: #B45309; /* amber-700 */
-  --color-secondary: #1E3A5F; /* deep navy */
-  --color-bg: #FFFBF5; /* warm white */
+  --color-primary: #D97706;
+  --color-primary-light: #FEF3C7;
+  --color-secondary: #1E3A5F;
+  --color-bg: #FFFBF5;
   --color-surface: #FFFFFF;
   --color-text-primary: #111827;
   --color-text-secondary: #6B7280;
   --color-border: #E5E7EB;
-  
-  /* Spacing & Radius */
   --radius-card: 12px;
   --radius-button: 8px;
-  
-  /* Typography */
-  --font-family: 'Tajawal', sans-serif;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+  --transition-fast: 150ms ease;
 }
 
 body {
-  font-family: var(--font-family);
+  font-family: 'Tajawal', sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text-primary);
 }
