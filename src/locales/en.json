@@ -8,7 +8,8 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
-    "my_dashboard": "My Dashboard"
+    "my_dashboard": "My Dashboard",
+    "profile": "Profile"
   },
   "hero": {
     "title": "Discover Iraq's Vibrant Events",
@@ -87,7 +88,8 @@
       "required": "This field is required",
       "invalid_email": "Please enter a valid email",
       "password_mismatch": "Passwords do not match"
-    }
+    },
+    "email_exists": "Email already exists"
   },
   "profile": {
     "account_type": "Account Type",

@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { Compass, Eye, EyeOff } from 'lucide-vue-next';
+import ErrorState from '@/components/ErrorState.vue';
 import { useAuthStore } from '@/stores/authStore';
 
 const { t, locale } = useI18n();
@@ -81,7 +82,7 @@ const handleLogin = async (): Promise<void> => {
           </div>
         </div>
 
-        <p v-if="error" class="text-sm text-red-600">{{ t(error) }}</p>
+        <ErrorState v-if="error" :message="t(error)" />
 
         <button
           type="submit"
