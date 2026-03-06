@@ -1,20 +1,182 @@
 [
-  { "id": "baghdad", "name": "Baghdad", "nameAr": "بغداد", "nameKu": "بەغدا" },
-  { "id": "erbil", "name": "Erbil", "nameAr": "أربيل", "nameKu": "هەولێر" },
-  { "id": "sulaymaniyah", "name": "Sulaymaniyah", "nameAr": "السليمانية", "nameKu": "سلێمانی" },
-  { "id": "basra", "name": "Basra", "nameAr": "البصرة", "nameKu": "بەسرە" },
-  { "id": "mosul", "name": "Mosul", "nameAr": "الموصل", "nameKu": "مووسڵ" },
-  { "id": "najaf", "name": "Najaf", "nameAr": "النجف", "nameKu": "نەجەف" },
-  { "id": "karbala", "name": "Karbala", "nameAr": "كربلاء", "nameKu": "کەربەلا" },
-  { "id": "kirkuk", "name": "Kirkuk", "nameAr": "كركوك", "nameKu": "کەرکووک" },
-  { "id": "ramadi", "name": "Ramadi", "nameAr": "الرمادي", "nameKu": "ڕەمادی" },
-  { "id": "baqubah", "name": "Baqubah", "nameAr": "بعقوبة", "nameKu": "بەعقووبە" },
-  { "id": "hillah", "name": "Hillah", "nameAr": "الحلة", "nameKu": "حلە" },
-  { "id": "amarah", "name": "Amarah", "nameAr": "العمارة", "nameKu": "عەمارە" },
-  { "id": "nasiriyah", "name": "Nasiriyah", "nameAr": "الناصرية", "nameKu": "ناسریە" },
-  { "id": "samawah", "name": "Samawah", "nameAr": "السماوة", "nameKu": "سەماوە" },
-  { "id": "diwaniyah", "name": "Diwaniyah", "nameAr": "الديوانية", "nameKu": "دیوانیە" },
-  { "id": "tikrit", "name": "Tikrit", "nameAr": "تكريت", "nameKu": "تکریت" },
-  { "id": "dohuk", "name": "Dohuk", "nameAr": "دهوك", "nameKu": "دهۆک" },
-  { "id": "halabja", "name": "Halabja", "nameAr": "حلبجة", "nameKu": "هەڵەبجە" }
+  {
+    "id": "baghdad",
+    "name_en": "Baghdad",
+    "name_ar": "بغداد",
+    "name_ku": "بەغدا",
+    "region": "center",
+    "name": "Baghdad",
+    "nameAr": "بغداد",
+    "nameKu": "بەغدا"
+  },
+  {
+    "id": "basra",
+    "name_en": "Basra",
+    "name_ar": "البصرة",
+    "name_ku": "بەسرە",
+    "region": "south",
+    "name": "Basra",
+    "nameAr": "البصرة",
+    "nameKu": "بەسرە"
+  },
+  {
+    "id": "nineveh",
+    "name_en": "Nineveh",
+    "name_ar": "نينوى",
+    "name_ku": "نەینەوا",
+    "region": "north",
+    "name": "Nineveh",
+    "nameAr": "نينوى",
+    "nameKu": "نەینەوا"
+  },
+  {
+    "id": "erbil",
+    "name_en": "Erbil",
+    "name_ar": "أربيل",
+    "name_ku": "هەولێر",
+    "region": "north",
+    "name": "Erbil",
+    "nameAr": "أربيل",
+    "nameKu": "هەولێر"
+  },
+  {
+    "id": "sulaymaniyah",
+    "name_en": "Sulaymaniyah",
+    "name_ar": "السليمانية",
+    "name_ku": "سلێمانی",
+    "region": "north",
+    "name": "Sulaymaniyah",
+    "nameAr": "السليمانية",
+    "nameKu": "سلێمانی"
+  },
+  {
+    "id": "dohuk",
+    "name_en": "Duhok",
+    "name_ar": "دهوك",
+    "name_ku": "دهۆک",
+    "region": "north",
+    "name": "Duhok",
+    "nameAr": "دهوك",
+    "nameKu": "دهۆک"
+  },
+  {
+    "id": "kirkuk",
+    "name_en": "Kirkuk",
+    "name_ar": "كركوك",
+    "name_ku": "کەرکووک",
+    "region": "center",
+    "name": "Kirkuk",
+    "nameAr": "كركوك",
+    "nameKu": "کەرکووک"
+  },
+  {
+    "id": "anbar",
+    "name_en": "Anbar",
+    "name_ar": "الأنبار",
+    "name_ku": "ئەنبار",
+    "region": "center",
+    "name": "Anbar",
+    "nameAr": "الأنبار",
+    "nameKu": "ئەنبار"
+  },
+  {
+    "id": "diyala",
+    "name_en": "Diyala",
+    "name_ar": "ديالى",
+    "name_ku": "دیالە",
+    "region": "center",
+    "name": "Diyala",
+    "nameAr": "ديالى",
+    "nameKu": "دیالە"
+  },
+  {
+    "id": "salahaddin",
+    "name_en": "Salah al-Din",
+    "name_ar": "صلاح الدين",
+    "name_ku": "سەلاحەدین",
+    "region": "center",
+    "name": "Salah al-Din",
+    "nameAr": "صلاح الدين",
+    "nameKu": "سەلاحەدین"
+  },
+  {
+    "id": "wasit",
+    "name_en": "Wasit",
+    "name_ar": "واسط",
+    "name_ku": "واسیط",
+    "region": "center",
+    "name": "Wasit",
+    "nameAr": "واسط",
+    "nameKu": "واسیط"
+  },
+  {
+    "id": "babel",
+    "name_en": "Babel",
+    "name_ar": "بابل",
+    "name_ku": "بابل",
+    "region": "center",
+    "name": "Babel",
+    "nameAr": "بابل",
+    "nameKu": "بابل"
+  },
+  {
+    "id": "karbala",
+    "name_en": "Karbala",
+    "name_ar": "كربلاء",
+    "name_ku": "کەربەلا",
+    "region": "center",
+    "name": "Karbala",
+    "nameAr": "كربلاء",
+    "nameKu": "کەربەلا"
+  },
+  {
+    "id": "najaf",
+    "name_en": "Najaf",
+    "name_ar": "النجف",
+    "name_ku": "نەجەف",
+    "region": "south",
+    "name": "Najaf",
+    "nameAr": "النجف",
+    "nameKu": "نەجەف"
+  },
+  {
+    "id": "maysan",
+    "name_en": "Maysan",
+    "name_ar": "ميسان",
+    "name_ku": "مەیسان",
+    "region": "south",
+    "name": "Maysan",
+    "nameAr": "ميسان",
+    "nameKu": "مەیسان"
+  },
+  {
+    "id": "dhiqar",
+    "name_en": "Dhi Qar",
+    "name_ar": "ذي قار",
+    "name_ku": "زیقار",
+    "region": "south",
+    "name": "Dhi Qar",
+    "nameAr": "ذي قار",
+    "nameKu": "زیقار"
+  },
+  {
+    "id": "muthanna",
+    "name_en": "Al Muthanna",
+    "name_ar": "المثنى",
+    "name_ku": "موسەننا",
+    "region": "south",
+    "name": "Al Muthanna",
+    "nameAr": "المثنى",
+    "nameKu": "موسەننا"
+  },
+  {
+    "id": "qadisiyyah",
+    "name_en": "Al-Qadisiyyah",
+    "name_ar": "القادسية",
+    "name_ku": "قادسیە",
+    "region": "south",
+    "name": "Al-Qadisiyyah",
+    "nameAr": "القادسية",
+    "nameKu": "قادسیە"
+  }
 ]

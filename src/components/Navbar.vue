@@ -36,21 +36,21 @@ const languages = [
 </script>
 
 <template>
-  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between h-16 items-center">
-        <div class="flex items-center gap-8">
-          <router-link to="/" class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+      <div class="flex justify-between h-16 items-center rtl:flex-row-reverse">
+        <div class="flex items-center gap-8 rtl:flex-row-reverse">
+          <router-link to="/" class="text-2xl font-bold text-[var(--color-secondary)]">
             Iraq Compass
           </router-link>
           
-          <div class="hidden md:flex gap-6">
+          <div class="hidden md:flex gap-6 rtl:flex-row-reverse">
             <router-link 
               v-for="item in navItems" 
               :key="item.path"
               :to="item.path"
-              class="text-slate-600 hover:text-emerald-600 transition-colors flex items-center gap-2 text-sm font-medium"
-              active-class="text-emerald-600"
+              class="text-slate-600 hover:text-[var(--color-primary)] transition-colors flex items-center gap-2 text-sm font-medium"
+              active-class="text-[var(--color-primary)]"
             >
               <component :is="item.icon" :size="18" />
               {{ item.name }}
@@ -58,7 +58,7 @@ const languages = [
           </div>
         </div>
 
-        <div class="flex items-center gap-6">
+        <div class="flex items-center gap-6 rtl:flex-row-reverse">
           <div class="hidden sm:flex bg-slate-100 p-1 rounded-lg">
             <button 
               v-for="lang in languages" 
@@ -66,31 +66,31 @@ const languages = [
               @click="setLocale(lang.code)"
               :class="[
                 'px-3 py-1 text-xs font-medium rounded-md transition-all',
-                locale === lang.code ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                locale === lang.code ? 'bg-white text-[var(--color-primary)] shadow-sm' : 'text-slate-500 hover:text-slate-700'
               ]"
             >
               {{ lang.name }}
             </button>
           </div>
 
-          <div class="flex items-center gap-3 border-l border-slate-200 pl-6">
+          <div class="flex items-center gap-3 border-l border-slate-200 pl-6 rtl:flex-row-reverse rtl:border-l-0 rtl:border-r rtl:pr-6 rtl:pl-0">
             <template v-if="userStore.isAuthenticated">
-              <router-link to="/tickets" class="p-2 text-slate-600 hover:text-emerald-600 transition-colors relative" title="My Tickets">
+              <router-link to="/tickets" class="p-2 text-slate-600 hover:text-[var(--color-primary)] transition-colors relative" title="My Tickets">
                 <Ticket :size="20" />
-                <span class="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full border-2 border-white"></span>
+                <span class="absolute top-1 right-1 w-2 h-2 bg-[var(--color-primary)] rounded-full border-2 border-white"></span>
               </router-link>
               <router-link to="/profile" class="flex items-center gap-2 p-1 pr-3 bg-slate-50 rounded-full hover:bg-slate-100 transition-all">
-                <div class="w-8 h-8 bg-emerald-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
+                <div class="w-8 h-8 bg-[var(--color-secondary)] text-white rounded-full flex items-center justify-center text-xs font-bold">
                   {{ userStore.user?.name.charAt(0) }}
                 </div>
                 <span class="text-sm font-bold text-slate-700 hidden lg:block">{{ userStore.user?.name }}</span>
               </router-link>
             </template>
             <template v-else>
-              <router-link to="/login" class="text-sm font-bold text-slate-600 hover:text-emerald-600 transition-colors">
+              <router-link to="/login" class="text-sm font-bold text-slate-600 hover:text-[var(--color-primary)] transition-colors">
                 {{ locale === 'en' ? 'Sign In' : (locale === 'ar' ? 'تسجيل الدخول' : 'چوونە ژوورەوە') }}
               </router-link>
-              <router-link to="/signup" class="px-5 py-2 bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-900/10 hover:bg-emerald-700 transition-all">
+              <router-link to="/signup" class="px-5 py-2 bg-[var(--color-primary)] text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-900/10 hover:bg-amber-700 transition-all">
                 {{ locale === 'en' ? 'Join Now' : (locale === 'ar' ? 'انضم الآن' : 'ئێستا ببە بە ئەندام') }}
               </router-link>
             </template>

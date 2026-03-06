@@ -1,11 +1,19 @@
 @import "tailwindcss";
+@import "./styles/tokens.css";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: "Noto Sans Arabic", sans-serif;
+  --font-sans: var(--font-family-base);
+  --font-arabic: var(--font-family-base);
 }
 
 @layer base {
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+  }
+
   [dir="rtl"] {
     text-align: right;
   }

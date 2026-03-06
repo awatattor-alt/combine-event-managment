@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, provide, computed, onMounted } from 'vue';
+import { ref, provide, computed, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Navbar from './components/Navbar.vue';
 import Toast from './components/Toast.vue';
@@ -19,10 +19,15 @@ const showToast = (message: string, type: 'success' | 'error' = 'success') => {
   toast.value = { show: true, message, type };
 };
 
+const applyDocumentDirection = (lang: string) => {
+  const direction = (lang === 'ar' || lang === 'ku') ? 'rtl' : 'ltr';
+  document.documentElement.dir = direction;
+  document.documentElement.lang = lang;
+};
+
 const setLocale = (newLocale: string) => {
   locale.value = newLocale;
   localStorage.setItem('locale', newLocale);
-  document.dir = (newLocale === 'ar' || newLocale === 'ku') ? 'rtl' : 'ltr';
 };
 
 const route = useRoute();
@@ -33,14 +38,18 @@ provide('locale', locale);
 provide('setLocale', setLocale);
 provide('showToast', showToast);
 
+watch(locale, (lang) => {
+  applyDocumentDirection(lang);
+});
+
 onMounted(async () => {
-  document.dir = (locale.value === 'ar' || locale.value === 'ku') ? 'rtl' : 'ltr';
+  applyDocumentDirection(locale.value);
   await eventStore.fetchInitialData();
 });
 </script>
 
 <template>
-  <div :class="['min-h-screen bg-slate-50 font-sans', (locale === 'ar' || locale === 'ku') ? 'font-arabic' : '']">
+  <div :class="['min-h-screen', (locale === 'ar' || locale === 'ku') ? 'font-arabic' : '']">
     <Navbar v-if="!isDashboard" />
     <main>
       <router-view v-slot="{ Component }">
@@ -49,22 +58,16 @@ onMounted(async () => {
         </transition>
       </router-view>
     </main>
-    <Toast 
-      :show="toast.show" 
-      :message="toast.message" 
-      :type="toast.type" 
-      @close="toast.show = false" 
+    <Toast
+      :show="toast.show"
+      :message="toast.message"
+      :type="toast.type"
+      @close="toast.show = false"
     />
   </div>
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
-
-.font-arabic {
-  font-family: 'Noto Sans Arabic', sans-serif;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
