@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia';
-import * as eventApi from '../mock/events';
+import eventsData from '@/mock-data/events.json';
+import citiesData from '@/mock-data/cities.json';
+import categoriesData from '@/mock-data/categories.json';
+import organizersData from '@/mock-data/organizers.json';
 
 export interface EventItem {
   id: string;
@@ -20,6 +23,9 @@ export interface EventItem {
   price: number;
   is_free: boolean;
   status: 'upcoming' | 'past';
+  tags?: string[];
+  popularity?: number;
+  created_at?: string;
 }
 
 interface CityItem {
@@ -60,7 +66,16 @@ interface EventState {
   searchQuery: string;
   selectedCity: string;
   selectedCategory: string;
+  selectedDate: string;
+  sortBy: 'date' | 'popularity' | 'recent';
 }
+
+const enrichEvent = (event: EventItem): EventItem => ({
+  ...event,
+  tags: event.tags ?? [event.category, event.city, event.governorate],
+  popularity: event.popularity ?? Math.floor(Math.random() * 1000 + 100),
+  created_at: event.created_at ?? `${event.date}T${event.time}:00`,
+});
 
 export const useEventStore = defineStore('events', {
   state: (): EventState => ({
@@ -73,60 +88,94 @@ export const useEventStore = defineStore('events', {
     searchQuery: '',
     selectedCity: '',
     selectedCategory: '',
+    selectedDate: '',
+    sortBy: 'date',
   }),
   getters: {
     filteredEvents: (state): EventItem[] => {
-      return state.events.filter((event) => {
-        const query = state.searchQuery.toLowerCase();
+      const query = state.searchQuery.toLowerCase().trim();
+
+      const filtered = state.events.filter((event) => {
+        const eventDate = event.date;
         const matchesSearch =
           !query ||
-          event.title_en?.toLowerCase().includes(query) ||
-          event.title_ar?.toLowerCase().includes(query) ||
-          event.title_ku?.toLowerCase().includes(query) ||
-          event.description_en?.toLowerCase().includes(query) ||
-          event.description_ar?.toLowerCase().includes(query) ||
-          event.description_ku?.toLowerCase().includes(query);
+          event.title_en.toLowerCase().includes(query) ||
+          event.title_ar.toLowerCase().includes(query) ||
+          event.title_ku.toLowerCase().includes(query) ||
+          event.description_en.toLowerCase().includes(query) ||
+          event.description_ar.toLowerCase().includes(query) ||
+          event.description_ku.toLowerCase().includes(query) ||
+          event.organizer_name.toLowerCase().includes(query) ||
+          event.tags?.some((tag) => tag.toLowerCase().includes(query));
 
         const matchesCity = !state.selectedCity || event.city === state.selectedCity;
         const matchesCategory = !state.selectedCategory || event.category === state.selectedCategory;
-        return matchesSearch && matchesCity && matchesCategory;
+        const matchesDate = !state.selectedDate || eventDate === state.selectedDate;
+
+        return matchesSearch && matchesCity && matchesCategory && matchesDate;
+      });
+
+      return [...filtered].sort((a, b) => {
+        if (state.sortBy === 'popularity') {
+          return (b.popularity ?? 0) - (a.popularity ?? 0);
+        }
+
+        if (state.sortBy === 'recent') {
+          return new Date(b.created_at ?? b.date).getTime() - new Date(a.created_at ?? a.date).getTime();
+        }
+
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
       });
     },
   },
   actions: {
     async fetchInitialData() {
+      if (this.events.length) return;
+
       this.loading = true;
       try {
-        const [events, cities, categories, organizers] = await Promise.all([
-          eventApi.getEvents(),
-          eventApi.getCities(),
-          eventApi.getCategories(),
-          eventApi.getOrganizers(),
-        ]);
-        this.events = events as EventItem[];
-        this.cities = cities as CityItem[];
-        this.categories = categories as CategoryItem[];
-        this.organizers = organizers as OrganizerItem[];
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        this.events = (eventsData as EventItem[]).map((event) => enrichEvent(event));
+        this.cities = citiesData as CityItem[];
+        this.categories = categoriesData as CategoryItem[];
+        this.organizers = organizersData as OrganizerItem[];
       } catch (error) {
         this.error = error instanceof Error ? error.message : 'Failed to fetch data';
       } finally {
         this.loading = false;
       }
     },
+    getEvents(): EventItem[] {
+      return this.events;
+    },
     getEventById(id: string): EventItem | undefined {
       return this.events.find((event) => event.id === id);
     },
-    addEvent(event: EventItem) {
-      this.events.push(event);
+    createEvent(event: Omit<EventItem, 'id'>): EventItem {
+      const createdEvent = enrichEvent({
+        ...event,
+        id: `e${Date.now()}`,
+      });
+      this.events = [createdEvent, ...this.events];
+      return createdEvent;
     },
-    updateEvent(updatedEvent: EventItem) {
+    updateEvent(updatedEvent: EventItem): EventItem | undefined {
       const index = this.events.findIndex((event) => event.id === updatedEvent.id);
-      if (index !== -1) {
-        this.events[index] = updatedEvent;
-      }
+      if (index === -1) return undefined;
+
+      const normalized = enrichEvent(updatedEvent);
+      this.events.splice(index, 1, normalized);
+      return normalized;
     },
-    deleteEvent(id: string) {
+    deleteEvent(id: string): void {
       this.events = this.events.filter((event) => event.id !== id);
+    },
+    resetFilters(): void {
+      this.searchQuery = '';
+      this.selectedCity = '';
+      this.selectedCategory = '';
+      this.selectedDate = '';
+      this.sortBy = 'date';
     },
   },
 });

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject, computed, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { Calendar, MapPin, ArrowRight } from 'lucide-vue-next';
+import { Calendar, MapPin, ArrowRight, Clock, UserRound } from 'lucide-vue-next';
 
 import { useEventStore, type EventItem } from '../../store/eventStore';
 
@@ -38,6 +38,12 @@ const getTitle = computed(() => {
   return props.event.title_en;
 });
 
+
+const getDescription = computed(() => {
+  if (activeLocale.value === 'ar') return props.event.description_ar;
+  if (activeLocale.value === 'ku') return props.event.description_ku;
+  return props.event.description_en;
+});
 const formatDate = (dateStr: string): string =>
   new Date(dateStr).toLocaleDateString(activeLocale.value === 'ar' ? 'ar-IQ' : 'en-GB', {
     day: 'numeric',
@@ -84,7 +90,7 @@ const formatDate = (dateStr: string): string =>
           <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-amber-500">
             <Calendar :size="16" />
           </div>
-          {{ formatDate(event.date) }}
+          {{ formatDate(event.date) }} • {{ event.time }}
         </div>
         <div class="flex items-center gap-3 text-sm text-slate-500">
           <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-amber-500">
@@ -92,6 +98,17 @@ const formatDate = (dateStr: string): string =>
           </div>
           {{ getCityName(event.city) }}
         </div>
+        <div class="flex items-center gap-3 text-sm text-slate-500">
+          <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-50 text-amber-500">
+            <UserRound :size="16" />
+          </div>
+          {{ event.organizer_name }}
+        </div>
+      </div>
+
+      <p class="mb-4 line-clamp-2 text-sm text-slate-500">{{ getDescription }}</p>
+      <div class="mb-4 flex flex-wrap gap-2">
+        <span v-for="tag in (event.tags || []).slice(0, 3)" :key="tag" class="rounded-full bg-slate-100 px-2 py-1 text-[10px] font-semibold text-slate-600">#{{ tag }}</span>
       </div>
 
       <div class="flex items-center justify-between border-t border-slate-50 pt-5">

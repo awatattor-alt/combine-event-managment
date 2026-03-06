@@ -62,12 +62,18 @@ const handleRegister = async (): Promise<void> => {
 
   loading.value = true;
 
-  await authStore.register(
+  const result = await authStore.register(
     name.value.trim(),
     email.value.trim(),
     password.value,
     role.value
   );
+
+  if (!result.success) {
+    showToast?.(t(result.error ?? 'auth.signup_failed'), 'error');
+    loading.value = false;
+    return;
+  }
 
   showToast?.(t('auth.signup_success'), 'success');
   loading.value = false;
