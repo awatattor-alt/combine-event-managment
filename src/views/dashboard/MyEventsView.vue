@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import { useEventStore, type EventItem } from '@/store/eventStore';
 import { useAuthStore } from '@/stores/authStore';
 import { useToast } from '@/composables/useToast';
+import SkeletonCard from '@/components/ui/SkeletonCard.vue';
 
 const { t, locale } = useI18n();
 const router = useRouter();
@@ -51,18 +52,22 @@ const removeEvent = (id: string): void => {
 
 <template>
   <div>
-    <div class="mb-5 flex items-center justify-between">
+    <div class="mb-5 flex items-center justify-between gap-3">
       <h1 class="text-xl font-bold text-[#1E3A5F]">{{ t('dashboard.tabs.my_events') }}</h1>
       <button
         type="button"
-        class="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
+        class="min-h-11 rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-amber-700"
         @click="router.push('/dashboard/create')"
       >
         {{ t('dashboard.empty.cta') }}
       </button>
     </div>
 
-    <div v-if="myEvents.length" class="overflow-x-auto rounded-xl border border-slate-200">
+    <div v-if="eventStore.loading" class="space-y-3">
+      <SkeletonCard v-for="i in 4" :key="i" class-name="h-16 w-full" />
+    </div>
+
+    <div v-else-if="myEvents.length" class="overflow-x-auto rounded-xl border border-slate-200">
       <table class="min-w-full text-sm">
         <thead class="bg-slate-50 text-slate-600">
           <tr>
@@ -89,14 +94,14 @@ const removeEvent = (id: string): void => {
               <div class="flex gap-2">
                 <button
                   type="button"
-                  class="rounded-md border border-slate-200 px-3 py-1 text-xs font-semibold"
+                  class="min-h-11 rounded-md border border-slate-200 px-3 py-2 text-xs font-semibold"
                   @click="router.push(`/dashboard/edit/${event.id}`)"
                 >
                   {{ t('common.edit') }}
                 </button>
                 <button
                   type="button"
-                  class="rounded-md border border-red-200 px-3 py-1 text-xs font-semibold text-red-700"
+                  class="min-h-11 rounded-md border border-red-200 px-3 py-2 text-xs font-semibold text-red-700"
                   @click="removeEvent(event.id)"
                 >
                   {{ t('common.delete') }}
@@ -112,7 +117,7 @@ const removeEvent = (id: string): void => {
       <p class="mb-4 text-slate-600">{{ t('dashboard.empty.message') }}</p>
       <button
         type="button"
-        class="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-700"
+        class="min-h-11 rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-amber-700"
         @click="router.push('/dashboard/create')"
       >
         {{ t('dashboard.empty.cta') }}

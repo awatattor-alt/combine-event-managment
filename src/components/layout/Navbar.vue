@@ -133,7 +133,7 @@ const handleLogout = (): void => {
               </div>
             </template>
 
-            <button @click="isMenuOpen = !isMenuOpen" class="md:hidden p-2 text-white/80 hover:text-white transition-colors">
+            <button @click="isMenuOpen = !isMenuOpen" class="min-h-11 min-w-11 md:hidden p-2 text-white/80 transition-colors hover:text-white">
               <Menu v-if="!isMenuOpen" :size="24" />
               <X v-else :size="24" />
             </button>
@@ -142,7 +142,8 @@ const handleLogout = (): void => {
       </div>
     </div>
 
-    <div v-if="isMenuOpen" class="md:hidden bg-[#1E3A5F] border-t border-white/10 pb-6">
+    <Transition name="drawer">
+    <div v-if="isMenuOpen" class="md:hidden border-t border-white/10 bg-[#1E3A5F] pb-6">
       <div class="px-4 pt-4 space-y-2">
         <router-link
           v-for="item in navItems"
@@ -188,5 +189,18 @@ const handleLogout = (): void => {
         </div>
       </div>
     </div>
+    </Transition>
   </nav>
 </template>
+
+<style scoped>
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: all 0.2s ease;
+}
+.drawer-enter-from,
+.drawer-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+</style>

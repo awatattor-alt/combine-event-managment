@@ -218,5 +218,18 @@
     "my_events": "My Events",
     "profile": "Profile",
     "noResults": "No events found matching your criteria."
+  },
+  "about": {
+    "title": "Iraq Compass is Iraq's event discovery platform",
+    "description": "Iraq Compass helps people discover, join, and organize events across all 18 governorates in Iraq.",
+    "mission": "Built for communities, creators, and organizers in every city."
+  },
+  "notFound": {
+    "title": "404",
+    "description": "The page you are looking for does not exist or has moved.",
+    "goHome": "Go Home"
+  },
+  "footer": {
+    "about": "About"
   }
 }

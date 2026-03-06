@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useEventStore } from '../store/eventStore';
@@ -10,6 +10,10 @@ import * as Icons from 'lucide-vue-next';
 const { t, locale } = useI18n();
 const store = useEventStore();
 const router = useRouter();
+
+onMounted(() => {
+  document.title = 'Iraq Compass — Discover Events Across Iraq';
+});
 
 const searchQuery = ref('');
 const selectedCity = ref('');
