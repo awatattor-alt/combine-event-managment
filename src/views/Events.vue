@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, ref, computed } from 'vue';
+import { inject, ref, computed, watch } from 'vue';
 import { useEventStore } from '../store/eventStore';
 import EventCard from '../components/EventCard.vue';
 import FilterBar from '../components/FilterBar.vue';
@@ -24,6 +24,10 @@ const hasMore = computed(() => {
 const loadMore = () => {
   currentPage.value++;
 };
+
+watch(() => [store.searchQuery, store.selectedCity, store.selectedCategory], () => {
+  currentPage.value = 1;
+});
 </script>
 
 <template>
@@ -57,7 +61,7 @@ const loadMore = () => {
       <h3 class="text-xl font-bold text-slate-900 mb-2">{{ t.common.noResults }}</h3>
       <p class="text-slate-500">{{ locale === 'en' ? 'Try adjusting your filters or search query' : (locale === 'ar' ? 'حاول تعديل الفلاتر أو استعلام البحث' : 'هەوڵ بدە فلتەرەکان یان گەڕانەکەت بگۆڕیت') }}</p>
       <button 
-        @click="store.searchQuery = ''; store.selectedCity = ''; store.selectedCategory = ''"
+        @click="store.resetFilters()"
         class="mt-6 px-6 py-2 bg-emerald-600 text-white font-bold rounded-xl"
       >
         {{ locale === 'en' ? 'Clear all filters' : (locale === 'ar' ? 'مسح كل الفلاتر' : 'پاککردنەوەی هەموو فلتەرەکان') }}

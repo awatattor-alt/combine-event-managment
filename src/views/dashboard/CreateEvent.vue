@@ -18,7 +18,8 @@ const event = ref({
   date: '',
   price: 0,
   ticketAvailability: 100,
-  image: 'https://picsum.photos/seed/new/800/600'
+  image: 'https://picsum.photos/seed/new/800/600',
+  organizerId: 'org1'
 });
 
 const getCategoryName = (cat: any) => {
@@ -76,6 +77,13 @@ const handleSubmit = () => {
             <label class="block text-sm font-bold text-slate-700 mb-2">{{ t.filters.city }}</label>
             <select v-model="event.city" class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500">
               <option v-for="city in store.cities" :key="city.id" :value="city.id">{{ getCityName(city) }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">{{ locale === 'en' ? 'Organizer' : (locale === 'ar' ? 'المنظم' : 'ڕێکخەر') }}</label>
+            <select v-model="event.organizerId" class="w-full px-4 py-3 bg-slate-50 border-none rounded-xl focus:ring-2 focus:ring-emerald-500">
+              <option v-for="organizer in store.organizers" :key="organizer.id" :value="organizer.id">{{ organizer.name }}</option>
             </select>
           </div>
         </div>
