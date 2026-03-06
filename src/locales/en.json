@@ -74,7 +74,19 @@
     "welcome_back_toast": "Welcome back!",
     "invalid_credentials": "Invalid credentials",
     "signup_success": "Account created successfully!",
-    "signup_failed": "Signup failed"
+    "signup_failed": "Signup failed",
+    "confirm_password": "Confirm Password",
+    "role_label": "Account Role",
+    "show_password": "Show password",
+    "hide_password": "Hide password",
+    "demo_hint": "Demo: organizer@iraq.com / demo123",
+    "register_link": "Register →",
+    "login_link": "Login",
+    "validation": {
+      "required": "This field is required",
+      "invalid_email": "Please enter a valid email",
+      "password_mismatch": "Passwords do not match"
+    }
   },
   "profile": {
     "account_type": "Account Type",
@@ -157,13 +169,5 @@
     "my_events": "My Events",
     "profile": "Profile",
     "noResults": "No events found matching your criteria."
-  },
-  "nav": {
-    "home": "Home",
-    "events": "Events",
-    "map": "Map",
-    "dashboard": "Dashboard",
-    "admin": "Admin",
-    "login": "Login"
   }
 }

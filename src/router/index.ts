@@ -10,31 +10,33 @@ import CreateEvent from '../views/dashboard/CreateEvent.vue';
 import EditEvent from '../views/dashboard/EditEvent.vue';
 import Admin from '../views/Admin.vue';
 
-import Login from '../views/Login.vue';
-import Signup from '../views/Signup.vue';
+import LoginView from '../views/auth/LoginView.vue';
+import RegisterView from '../views/auth/RegisterView.vue';
 import Profile from '../views/Profile.vue';
 import Checkout from '../views/Checkout.vue';
 import MyTickets from '../views/MyTickets.vue';
+import { useAuthStore } from '@/stores/authStore';
 
 const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/events', name: 'Events', component: Events },
   { path: '/events/:id', name: 'EventDetails', component: EventDetails },
   { path: '/map', name: 'Map', component: MapView },
-  { path: '/login', name: 'Login', component: Login },
-  { path: '/signup', name: 'Signup', component: Signup },
+  { path: '/login', name: 'Login', component: LoginView },
+  { path: '/register', name: 'Register', component: RegisterView },
+  { path: '/signup', redirect: '/register' },
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/checkout/:id', name: 'Checkout', component: Checkout },
   { path: '/tickets', name: 'MyTickets', component: MyTickets },
-  { 
-    path: '/dashboard', 
+  {
+    path: '/dashboard',
     component: DashboardLayout,
     children: [
       { path: '', name: 'DashboardOverview', component: DashboardOverview },
       { path: 'my-events', name: 'MyEvents', component: MyEvents },
       { path: 'create-event', name: 'CreateEvent', component: CreateEvent },
       { path: 'edit-event/:id', name: 'EditEvent', component: EditEvent },
-    ]
+    ],
   },
   { path: '/admin', name: 'Admin', component: Admin },
 ];
@@ -45,6 +47,21 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 };
   },
+});
+
+router.beforeEach((to) => {
+  const authStore = useAuthStore();
+  const needsAuth = to.path === '/dashboard' || to.path.startsWith('/dashboard/');
+
+  if (needsAuth && !authStore.isLoggedIn) {
+    return '/login';
+  }
+
+  if ((to.path === '/login' || to.path === '/register') && authStore.isLoggedIn) {
+    return '/';
+  }
+
+  return true;
 });
 
 export default router;
