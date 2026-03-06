@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, onUnmounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { Calendar, MapPin, LayoutDashboard, Globe, Compass, Menu, X, ChevronDown } from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/authStore';
 
 const { t, locale } = useI18n();
 const setLocale = inject<(value: string) => void>('setLocale');
-const router = useRouter();
 const authStore = useAuthStore();
 
 const isMenuOpen = ref(false);
@@ -115,7 +113,7 @@ const handleLogout = (): void => {
                   class="absolute end-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 py-2 z-50"
                 >
                   <router-link to="/dashboard" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50" @click="showUserMenu = false">
-                    {{ t('nav.dashboard') }}
+                    {{ t('nav.my_dashboard') }}
                   </router-link>
                   <button @click="handleLogout" class="w-full text-start px-4 py-2 text-sm text-red-600 hover:bg-red-50">
                     {{ t('nav.logout') }}
@@ -165,6 +163,28 @@ const handleLogout = (): void => {
           <router-link to="/register" @click="closeMenu" class="flex items-center justify-center py-3 text-sm font-bold text-white bg-amber-500 rounded-lg">
             {{ t('nav.register') }}
           </router-link>
+        </div>
+
+        <div v-else class="px-4 pt-4 border-t border-white/10 mt-4 space-y-3">
+          <div class="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/10">
+            <div class="w-8 h-8 bg-amber-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
+              {{ authStore.currentUser?.name.charAt(0) }}
+            </div>
+            <p class="text-sm font-semibold text-white">{{ authStore.currentUser?.name }}</p>
+          </div>
+          <router-link
+            to="/dashboard"
+            @click="closeMenu"
+            class="flex items-center justify-center py-3 text-sm font-bold text-white bg-white/10 rounded-lg"
+          >
+            {{ t('nav.my_dashboard') }}
+          </router-link>
+          <button
+            @click="handleLogout"
+            class="w-full py-3 text-sm font-bold text-red-200 border border-red-200/40 rounded-lg"
+          >
+            {{ t('nav.logout') }}
+          </button>
         </div>
       </div>
     </div>

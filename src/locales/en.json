@@ -7,7 +7,8 @@
     "admin": "Admin",
     "login": "Login",
     "register": "Register",
-    "logout": "Logout"
+    "logout": "Logout",
+    "my_dashboard": "My Dashboard"
   },
   "hero": {
     "title": "Discover Iraq's Vibrant Events",
