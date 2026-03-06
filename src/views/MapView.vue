@@ -2,6 +2,7 @@
 import { inject } from 'vue';
 import { useEventStore } from '../store/eventStore';
 import { MapPin } from 'lucide-vue-next';
+import { formatIQDCurrency } from '../utils/format';
 
 const store = useEventStore();
 const t = inject<any>('t');
@@ -43,7 +44,10 @@ const getCityName = (city: any) => {
         </div>
       </div>
       
-      <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <div v-if="store.loading" class="flex-1 p-4 text-slate-500">{{ t.common.loading }}</div>
+      <div v-else-if="store.error" class="flex-1 p-4 text-slate-500">{{ store.error }}</div>
+      <div v-else-if="store.events.length === 0" class="flex-1 p-4 text-slate-500">{{ t.common.noResults }}</div>
+      <div v-else class="flex-1 overflow-y-auto p-4 space-y-4">
         <div 
           v-for="event in store.events" 
           :key="event.id"
@@ -54,7 +58,7 @@ const getCityName = (city: any) => {
             <div>
               <h4 class="font-bold text-slate-900 group-hover:text-emerald-600 transition-colors">{{ event.title }}</h4>
               <p class="text-xs text-slate-500">{{ event.venue }}</p>
-              <p class="text-xs font-bold text-emerald-600 mt-1">{{ event.price === 0 ? t.event.free : `${event.price} IQD` }}</p>
+              <p class="text-xs font-bold text-emerald-600 mt-1">{{ event.price === 0 ? t.event.free : formatIQDCurrency(event.price, locale.value) }}</p>
             </div>
           </div>
         </div>
