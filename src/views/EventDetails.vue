@@ -18,17 +18,20 @@ const { t, locale } = useI18n();
 const event = computed(() => store.events.find(e => e.id === route.params.id));
 interface OrganizerProfile {
   id: string;
-  name_en: string;
-  name_ar: string;
-  name_ku: string;
-  verified: boolean;
-  avatar?: string;
+  name: string;
+  avatar_url: string;
 }
 
-const organizer = computed<OrganizerProfile | { name: string } | null>(() => {
+const organizer = computed<OrganizerProfile | null>(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers?.find((o) => o.id === currentEvent.organizer_id) || { name: currentEvent.organizer_name };
+  const found = store.organizers?.find((o) => o.id === currentEvent.organizer_id);
+  if (!found) return null;
+  return {
+    id: found.id,
+    name: found.name,
+    avatar_url: found.avatar_url,
+  };
 });
 
 const relatedEvents = computed(() => {
@@ -171,7 +174,7 @@ const shareEvent = () => {
             </div>
             <div class="flex items-center gap-2">
               <MapPin :size="20" class="text-amber-500" />
-              {{ event.venue }}, {{ getCityName(event.city) }}
+              {{ getCityName(event.city) }}
             </div>
           </div>
         </div>
@@ -260,11 +263,11 @@ const shareEvent = () => {
             <div class="mt-8 pt-8 border-t border-slate-50">
               <h4 class="font-bold text-[#1E3A5F] mb-4">{{ t('event.organizer') }}</h4>
               <div class="flex items-center gap-4">
-                <img :src="organizer?.avatar || `https://picsum.photos/seed/${event.organizer_id}/100/100`" class="w-12 h-12 rounded-xl object-cover" referrerPolicy="no-referrer" />
+                <img :src="organizer?.avatar_url || `https://picsum.photos/seed/${event.organizer_id}/100/100`" class="w-12 h-12 rounded-xl object-cover" referrerPolicy="no-referrer" />
                 <div>
                   <div class="flex items-center gap-1">
-                    <p class="font-bold text-[#1E3A5F]">{{ organizer?.name || event.organizer_name }}</p>
-                    <ShieldCheck v-if="organizer?.verified" :size="14" class="text-emerald-500" />
+                    <p class="font-bold text-[#1E3A5F]">{{ organizer?.name ?? event.organizer_name }}</p>
+                    <ShieldCheck :size="14" class="text-emerald-500" />
                   </div>
                   <p class="text-xs text-slate-400">154 {{ t('event.hosted') }}</p>
                 </div>

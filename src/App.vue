@@ -36,6 +36,12 @@ onMounted(async () => {
   await eventStore.fetchInitialData();
 });
 
+
+watch(locale, (newLocale) => {
+  document.documentElement.dir = newLocale === 'ar' || newLocale === 'ku' ? 'rtl' : 'ltr';
+  document.documentElement.lang = newLocale;
+});
+
 watch(storedLocale, (newValue) => {
   locale.value = newValue;
   document.documentElement.dir = newValue === 'ar' || newValue === 'ku' ? 'rtl' : 'ltr';

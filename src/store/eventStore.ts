@@ -41,12 +41,13 @@ interface CategoryItem {
 
 interface OrganizerItem {
   id: string;
-  name_en: string;
-  name_ar: string;
-  name_ku: string;
-  logo_url: string;
-  city: string;
-  verified: boolean;
+  name: string;
+  email: string;
+  avatar_url: string;
+  bio_en: string;
+  bio_ar: string;
+  bio_ku: string;
+  events_count: number;
 }
 
 interface EventState {

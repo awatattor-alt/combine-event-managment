@@ -231,5 +231,10 @@
   },
   "footer": {
     "about": "About"
+  },
+  "map": {
+    "placeholder": "Explore events geographically across Iraq. In a production environment, this will integrate with Google Maps or Mapbox.",
+    "events_near_you": "Events Near You",
+    "search_location": "Search location..."
   }
 }
