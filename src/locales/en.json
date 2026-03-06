@@ -5,7 +5,9 @@
     "map": "Map",
     "dashboard": "Dashboard",
     "admin": "Admin",
-    "login": "Login"
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
   },
   "hero": {
     "title": "Discover Iraq's Vibrant Events",
@@ -49,11 +51,7 @@
     "verified": "Verified Event",
     "similar": "Similar Events",
     "secure_checkout": "Secure checkout via Iraq Compass",
-    "hosted": "Events hosted",
-    "backToEvents": "Back to Events",
-    "linkCopied": "Link copied!",
-    "notFoundTitle": "Event not found",
-    "notFoundDescription": "This event may have been removed or is unavailable."
+    "hosted": "Events hosted"
   },
   "auth": {
     "login": "Login",
@@ -100,17 +98,7 @@
     "showing": "Showing",
     "load_more": "Load More Events",
     "no_results_subtitle": "We couldn't find any events matching your current filters. Try adjusting your search or clearing filters.",
-    "clear_filters": "Clear All Filters",
-    "filters": "Filters",
-    "dateRange": "Date Range",
-    "allDates": "All Dates",
-    "thisWeek": "This Week",
-    "thisMonth": "This Month",
-    "freeOnly": "Free Only",
-    "sortNewest": "Newest First",
-    "sortSoonest": "Soonest",
-    "sortAz": "A–Z",
-    "noEvents": "No events found"
+    "clear_filters": "Clear All Filters"
   },
   "dashboard": {
     "overview": "Overview",
@@ -169,5 +157,13 @@
     "my_events": "My Events",
     "profile": "Profile",
     "noResults": "No events found matching your criteria."
+  },
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "map": "Map",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "login": "Login"
   }
 }
