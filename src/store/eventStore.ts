@@ -1,35 +1,96 @@
 import { defineStore } from 'pinia';
 import * as eventApi from '../mock/events';
 
+export interface EventItem {
+  id: string;
+  title_en: string;
+  title_ar: string;
+  title_ku: string;
+  description_en: string;
+  description_ar: string;
+  description_ku: string;
+  date: string;
+  time: string;
+  city: string;
+  governorate: string;
+  category: string;
+  image_url: string;
+  organizer_name: string;
+  organizer_id: string;
+  price: number;
+  is_free: boolean;
+  status: 'upcoming' | 'past';
+}
+
+interface CityItem {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  name_ku: string;
+  region: string;
+}
+
+interface CategoryItem {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  name_ku: string;
+  icon: string;
+  color: string;
+}
+
+interface OrganizerItem {
+  id: string;
+  name_en: string;
+  name_ar: string;
+  name_ku: string;
+  logo_url: string;
+  city: string;
+  verified: boolean;
+}
+
+interface EventState {
+  events: EventItem[];
+  cities: CityItem[];
+  categories: CategoryItem[];
+  organizers: OrganizerItem[];
+  loading: boolean;
+  error: string | null;
+  searchQuery: string;
+  selectedCity: string;
+  selectedCategory: string;
+}
+
 export const useEventStore = defineStore('events', {
-  state: () => ({
-    events: [] as any[],
-    cities: [] as any[],
-    categories: [] as any[],
-    organizers: [] as any[],
+  state: (): EventState => ({
+    events: [],
+    cities: [],
+    categories: [],
+    organizers: [],
     loading: false,
-    error: null as string | null,
+    error: null,
     searchQuery: '',
     selectedCity: '',
     selectedCategory: '',
   }),
   getters: {
-    filteredEvents: (state) => {
-      return state.events.filter(event => {
+    filteredEvents: (state): EventItem[] => {
+      return state.events.filter((event) => {
         const query = state.searchQuery.toLowerCase();
-        const matchesSearch = !query || 
-          event.title_en?.toLowerCase().includes(query) || 
-          event.title_ar?.toLowerCase().includes(query) || 
+        const matchesSearch =
+          !query ||
+          event.title_en?.toLowerCase().includes(query) ||
+          event.title_ar?.toLowerCase().includes(query) ||
           event.title_ku?.toLowerCase().includes(query) ||
           event.description_en?.toLowerCase().includes(query) ||
           event.description_ar?.toLowerCase().includes(query) ||
           event.description_ku?.toLowerCase().includes(query);
-          
+
         const matchesCity = !state.selectedCity || event.city === state.selectedCity;
         const matchesCategory = !state.selectedCategory || event.category === state.selectedCategory;
         return matchesSearch && matchesCity && matchesCategory;
       });
-    }
+    },
   },
   actions: {
     async fetchInitialData() {
@@ -39,35 +100,32 @@ export const useEventStore = defineStore('events', {
           eventApi.getEvents(),
           eventApi.getCities(),
           eventApi.getCategories(),
-          eventApi.getOrganizers()
+          eventApi.getOrganizers(),
         ]);
-        this.events = events;
-        this.cities = cities;
-        this.categories = categories;
-        this.organizers = organizers;
-      } catch (err: any) {
-        this.error = err.message;
+        this.events = events as EventItem[];
+        this.cities = cities as CityItem[];
+        this.categories = categories as CategoryItem[];
+        this.organizers = organizers as OrganizerItem[];
+      } catch (error) {
+        this.error = error instanceof Error ? error.message : 'Failed to fetch data';
       } finally {
         this.loading = false;
       }
     },
-    async addEvent(event: any) {
-      this.loading = true;
-      try {
-        const newEvent = await eventApi.createEvent(event);
-        this.events.push(newEvent);
-      } catch (err: any) {
-        this.error = err.message;
-      } finally {
-        this.loading = false;
-      }
+    getEventById(id: string): EventItem | undefined {
+      return this.events.find((event) => event.id === id);
     },
-    updateEvent(updatedEvent: any) {
-      const index = this.events.findIndex(e => e.id === updatedEvent.id);
-      if (index !== -1) this.events[index] = updatedEvent;
+    addEvent(event: EventItem) {
+      this.events.push(event);
+    },
+    updateEvent(updatedEvent: EventItem) {
+      const index = this.events.findIndex((event) => event.id === updatedEvent.id);
+      if (index !== -1) {
+        this.events[index] = updatedEvent;
+      }
     },
     deleteEvent(id: string) {
-      this.events = this.events.filter(e => e.id !== id);
-    }
-  }
+      this.events = this.events.filter((event) => event.id !== id);
+    },
+  },
 });

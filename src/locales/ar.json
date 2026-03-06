@@ -128,20 +128,68 @@
       "date": "التاريخ",
       "status": "الحالة",
       "tickets": "التذاكر",
-      "actions": "الإجراءات"
+      "actions": "الإجراءات",
+      "title": "العنوان",
+      "city": "المدينة",
+      "category": "الفئة"
     },
     "form": {
       "title": "عنوان الفعالية",
       "description": "الوصف",
       "category": "الفئة",
-      "city": "المدينة",
+      "city": "المدينة / المحافظة",
       "venue": "اسم المكان",
       "dateTime": "التاريخ والوقت",
       "price": "سعر التذكرة (د.ع)",
       "totalTickets": "إجمالي التذاكر المتاحة",
       "media": "وسائط الفعالية",
       "upload": "تحميل بنر الفعالية",
-      "uploadHint": "الحجم الموصى به: 1200x600 بكسل (بحد أقصى 5 ميجابايت)"
+      "uploadHint": "الحجم الموصى به: 1200x600 بكسل (بحد أقصى 5 ميجابايت)",
+      "title_en": "العنوان بالإنجليزية",
+      "title_ar": "العنوان بالعربية",
+      "title_ku": "العنوان بالكردية",
+      "description_en": "الوصف بالإنجليزية",
+      "select_category": "اختر الفئة",
+      "select_city": "اختر المدينة",
+      "date": "التاريخ",
+      "time": "الوقت",
+      "is_free": "مجاني",
+      "price_iqd": "السعر بالدينار العراقي",
+      "image_url": "رابط الصورة",
+      "image_placeholder": "https://picsum.photos/seed/myevent/800/400",
+      "submit_create": "إنشاء فعالية"
+    },
+    "title": "لوحة المنظم",
+    "organizer": "المنظم",
+    "welcome_back": "مرحباً بعودتك، {name}",
+    "confirm_delete": "هل أنت متأكد أنك تريد حذف هذه الفعالية؟",
+    "event_not_found": "لم يتم العثور على الفعالية.",
+    "tabs": {
+      "my_events": "فعالياتي",
+      "create_event": "إنشاء فعالية",
+      "edit_event": "تعديل الفعالية",
+      "profile": "الملف الشخصي"
+    },
+    "status": {
+      "upcoming": "قادمة",
+      "past": "سابقة"
+    },
+    "empty": {
+      "message": "ليس لديك أي فعاليات بعد",
+      "cta": "أنشئ فعاليتك الأولى"
+    },
+    "validation": {
+      "required": "يرجى تعبئة الحقول المطلوبة"
+    },
+    "toast": {
+      "created": "تم إنشاء الفعالية!",
+      "updated": "تم تحديث الفعالية!",
+      "deleted": "تم حذف الفعالية!",
+      "profile_saved": "تم تحديث الملف الشخصي!"
+    },
+    "profile": {
+      "display_name": "اسم العرض",
+      "save": "حفظ"
     }
   },
   "common": {

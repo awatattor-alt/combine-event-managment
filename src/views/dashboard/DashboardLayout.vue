@@ -1,76 +1,81 @@
 <script setup lang="ts">
-import { inject } from 'vue';
-import { LayoutDashboard, PlusCircle, List, Settings, LogOut } from 'lucide-vue-next';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { LayoutList, PlusCircle, UserRound, LogOut } from 'lucide-vue-next';
+import { useAuthStore } from '@/stores/authStore';
 
-const t = inject<any>('t');
-const locale = inject<any>('locale');
+const { t } = useI18n();
+const route = useRoute();
+const authStore = useAuthStore();
+
+const tabs = [
+  { to: '/dashboard', labelKey: 'dashboard.tabs.my_events', icon: LayoutList },
+  { to: '/dashboard/create', labelKey: 'dashboard.tabs.create_event', icon: PlusCircle },
+  { to: '/dashboard/profile', labelKey: 'dashboard.tabs.profile', icon: UserRound },
+];
+
+const activePath = computed(() => route.path);
+
+const isActive = (path: string): boolean => {
+  if (path === '/dashboard') {
+    return activePath.value === '/dashboard';
+  }
+  return activePath.value.startsWith(path);
+};
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-50 flex">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r border-slate-200 hidden lg:flex flex-col">
-      <div class="p-8">
-        <router-link to="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
-            <span class="text-white font-black text-xl">I</span>
-          </div>
-          <span class="text-xl font-black text-slate-900 tracking-tighter">Compass</span>
-        </router-link>
-      </div>
-
-      <nav class="flex-1 px-4 space-y-2">
-        <router-link 
-          to="/dashboard" 
-          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
-          active-class="bg-emerald-50 !text-emerald-600 font-bold"
-          exact
+  <div class="min-h-screen bg-slate-100 md:flex">
+    <aside class="hidden w-60 shrink-0 border-e border-slate-200 bg-slate-50 md:flex md:flex-col">
+      <div class="p-4 text-lg font-bold text-[#1E3A5F]">{{ t('dashboard.title') }}</div>
+      <nav class="space-y-2 px-3">
+        <RouterLink
+          v-for="tab in tabs"
+          :key="tab.to"
+          :to="tab.to"
+          class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium"
+          :class="isActive(tab.to) ? 'bg-white text-[#1E3A5F] shadow-sm' : 'text-slate-600 hover:bg-white'"
         >
-          <LayoutDashboard :size="20" />
-          {{ t.dashboard.overview }}
-        </router-link>
-        <router-link 
-          to="/dashboard/my-events" 
-          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
-          active-class="bg-emerald-50 !text-emerald-600 font-bold"
-        >
-          <List :size="20" />
-          {{ t.dashboard.myEvents }}
-        </router-link>
-        <router-link 
-          to="/dashboard/create-event" 
-          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
-          active-class="bg-emerald-50 !text-emerald-600 font-bold"
-        >
-          <PlusCircle :size="20" />
-          {{ t.dashboard.createEvent }}
-        </router-link>
+          <component :is="tab.icon" class="h-4 w-4" />
+          {{ t(tab.labelKey) }}
+        </RouterLink>
       </nav>
-
-      <div class="p-4 border-t border-slate-100">
-        <button class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all">
-          <LogOut :size="20" />
-          {{ t.common.signOut }}
-        </button>
-      </div>
     </aside>
 
-    <!-- Main Content -->
-    <main class="flex-1 overflow-y-auto">
-      <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
-        <h2 class="font-bold text-slate-900">{{ locale.value === 'en' ? 'Organizer Portal' : (locale.value === 'ar' ? 'بوابة المنظم' : 'پۆرتالی ڕێکخەر') }}</h2>
-        <div class="flex items-center gap-4">
-          <div class="text-right hidden sm:block">
-            <p class="text-sm font-bold text-slate-900">Cultural Hub IQ</p>
-            <p class="text-xs text-slate-500">{{ locale.value === 'en' ? 'Organizer Account' : (locale.value === 'ar' ? 'حساب المنظم' : 'هەژماری ڕێکخەر') }}</p>
-          </div>
-          <div class="w-10 h-10 bg-slate-100 rounded-full border-2 border-white shadow-sm"></div>
-        </div>
+    <section class="flex min-h-screen flex-1 flex-col">
+      <header class="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:px-6">
+        <p class="text-sm font-semibold text-[#1E3A5F]">
+          {{ t('dashboard.welcome_back', { name: authStore.currentUser?.name ?? t('dashboard.organizer') }) }}
+        </p>
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+          @click="authStore.logout"
+        >
+          <LogOut class="h-4 w-4" />
+          {{ t('nav.logout') }}
+        </button>
       </header>
 
-      <div class="p-8">
-        <router-view></router-view>
+      <main class="flex-1 bg-white p-4 pb-24 md:p-6 md:pb-6">
+        <RouterView />
+      </main>
+    </section>
+
+    <nav class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white p-2 md:hidden">
+      <div class="grid grid-cols-3 gap-2">
+        <RouterLink
+          v-for="tab in tabs"
+          :key="tab.to"
+          :to="tab.to"
+          class="flex flex-col items-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold"
+          :class="isActive(tab.to) ? 'bg-amber-50 text-amber-700' : 'text-slate-500'"
+        >
+          <component :is="tab.icon" class="h-4 w-4" />
+          {{ t(tab.labelKey) }}
+        </RouterLink>
       </div>
-    </main>
+    </nav>
   </div>
 </template>

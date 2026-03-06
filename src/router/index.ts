@@ -4,10 +4,10 @@ import Events from '../views/Events.vue';
 import EventDetails from '../views/EventDetails.vue';
 import MapView from '../views/MapView.vue';
 import DashboardLayout from '../views/dashboard/DashboardLayout.vue';
-import DashboardOverview from '../views/dashboard/Overview.vue';
-import MyEvents from '../views/dashboard/MyEvents.vue';
-import CreateEvent from '../views/dashboard/CreateEvent.vue';
-import EditEvent from '../views/dashboard/EditEvent.vue';
+import MyEventsView from '../views/dashboard/MyEventsView.vue';
+import CreateEventView from '../views/dashboard/CreateEventView.vue';
+import EditEventView from '../views/dashboard/EditEventView.vue';
+import ProfileView from '../views/dashboard/ProfileView.vue';
 import Admin from '../views/Admin.vue';
 
 import LoginView from '../views/auth/LoginView.vue';
@@ -32,10 +32,10 @@ const routes = [
     path: '/dashboard',
     component: DashboardLayout,
     children: [
-      { path: '', name: 'DashboardOverview', component: DashboardOverview },
-      { path: 'my-events', name: 'MyEvents', component: MyEvents },
-      { path: 'create-event', name: 'CreateEvent', component: CreateEvent },
-      { path: 'edit-event/:id', name: 'EditEvent', component: EditEvent },
+      { path: '', name: 'DashboardMyEvents', component: MyEventsView },
+      { path: 'create', name: 'DashboardCreateEvent', component: CreateEventView },
+      { path: 'edit/:id', name: 'DashboardEditEvent', component: EditEventView },
+      { path: 'profile', name: 'DashboardProfile', component: ProfileView },
     ],
   },
   { path: '/admin', name: 'Admin', component: Admin },
