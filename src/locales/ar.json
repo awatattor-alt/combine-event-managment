@@ -74,7 +74,19 @@
     "welcome_back_toast": "مرحباً بعودتك!",
     "invalid_credentials": "بيانات الاعتماد غير صالحة",
     "signup_success": "تم إنشاء الحساب بنجاح!",
-    "signup_failed": "فشل إنشاء الحساب"
+    "signup_failed": "فشل إنشاء الحساب",
+    "confirm_password": "تأكيد كلمة المرور",
+    "role_label": "نوع الحساب",
+    "show_password": "إظهار كلمة المرور",
+    "hide_password": "إخفاء كلمة المرور",
+    "demo_hint": "تجريبي: organizer@iraq.com / demo123",
+    "register_link": "إنشاء حساب ←",
+    "login_link": "تسجيل الدخول",
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "invalid_email": "يرجى إدخال بريد إلكتروني صحيح",
+      "password_mismatch": "كلمتا المرور غير متطابقتين"
+    }
   },
   "profile": {
     "account_type": "نوع الحساب",
@@ -157,13 +169,5 @@
     "my_events": "فعالياتي",
     "profile": "الملف الشخصي",
     "noResults": "لم يتم العثور على فعاليات تطابق معاييرك."
-  },
-  "nav": {
-    "home": "الرئيسية",
-    "events": "الفعاليات",
-    "map": "الخريطة",
-    "dashboard": "لوحة التحكم",
-    "admin": "الإدارة",
-    "login": "تسجيل الدخول"
   }
 }
