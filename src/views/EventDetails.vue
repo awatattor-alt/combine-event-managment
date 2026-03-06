@@ -16,7 +16,7 @@ const event = computed(() => store.events.find(e => e.id === route.params.id));
 const organizer = computed(() => {
   const currentEvent = event.value;
   if (!currentEvent) return null;
-  return store.organizers.find(o => o.id === currentEvent.organizerId);
+  return (store as any).organizers?.find((o: any) => o.id === currentEvent.organizer_id) || { name: currentEvent.organizer_name };
 });
 
 const relatedEvents = computed(() => {

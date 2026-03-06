@@ -1,5 +1,18 @@
 [
-  { "id": "user1", "name": "Ahmed Ali", "email": "ahmed@example.com", "role": "admin" },
-  { "id": "user2", "name": "Sara Hassan", "email": "sara@example.com", "role": "organizer" },
-  { "id": "user3", "name": "Zaid Mohammed", "email": "zaid@example.com", "role": "user" }
+  {
+    "id": "user1",
+    "name": "Ahmed Ali",
+    "email": "ahmed@example.com",
+    "password": "password123",
+    "role": "user",
+    "avatar_url": "https://picsum.photos/seed/user1/200"
+  },
+  {
+    "id": "user2",
+    "name": "Sara Hassan",
+    "email": "sara@example.com",
+    "password": "password123",
+    "role": "organizer",
+    "avatar_url": "https://picsum.photos/seed/user2/200"
+  }
 ]

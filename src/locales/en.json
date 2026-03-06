@@ -70,6 +70,23 @@
     "back": "Back",
     "signOut": "Sign Out",
     "loading": "Loading...",
+    "error": "An error occurred",
+    "no_results": "No results found",
+    "free": "Free",
+    "upcoming": "Upcoming",
+    "city": "City",
+    "category": "Category",
+    "date": "Date",
+    "search": "Search",
+    "filter": "Filter",
     "noResults": "No events found matching your criteria."
+  },
+  "nav": {
+    "home": "Home",
+    "events": "Events",
+    "map": "Map",
+    "dashboard": "Dashboard",
+    "admin": "Admin",
+    "login": "Login"
   }
 }

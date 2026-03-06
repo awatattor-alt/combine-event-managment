@@ -1,6 +1,7 @@
 import eventsData from '../mock-data/events.json';
 import citiesData from '../mock-data/cities.json';
 import categoriesData from '../mock-data/categories.json';
+import organizersData from '../mock-data/organizers.json';
 
 export const getEvents = async () => {
   // Simulate API delay
@@ -15,6 +16,7 @@ export const getEventById = async (id: string) => {
 
 export const getCities = async () => citiesData;
 export const getCategories = async () => categoriesData;
+export const getOrganizers = async () => organizersData;
 
 export const createEvent = async (event: any) => {
   await new Promise(resolve => setTimeout(resolve, 800));

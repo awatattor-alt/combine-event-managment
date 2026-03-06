@@ -1,22 +1,52 @@
 [
-  { "id": "org1", "name": "Iraq Tech Community", "description": "Connecting tech enthusiasts across Iraq." },
-  { "id": "org2", "name": "Baghdad Arts Council", "description": "Promoting visual and performing arts in the capital." },
-  { "id": "org3", "name": "Erbil Business Forum", "description": "The leading platform for entrepreneurs in Kurdistan." },
-  { "id": "org4", "name": "Basra Music Society", "description": "Celebrating the rich musical heritage of southern Iraq." },
-  { "id": "org5", "name": "Mosul Heritage Foundation", "description": "Preserving and restoring the cultural identity of Mosul." },
-  { "id": "org6", "name": "Najaf Scholars Association", "description": "Organizing academic and philosophical seminars." },
-  { "id": "org7", "name": "Karbala Youth Volunteers", "description": "Empowering youth through community service and events." },
-  { "id": "org8", "name": "Sulaymaniyah Tech Hub", "description": "Incubating startups and tech talent in Suli." },
-  { "id": "org9", "name": "Kirkuk Cultural Union", "description": "Fostering multicultural dialogue through arts." },
-  { "id": "org10", "name": "Anbar Development Group", "description": "Focused on reconstruction and social events in Anbar." },
-  { "id": "org11", "name": "Diyala Arts Collective", "description": "A group of artists dedicated to local exhibitions." },
-  { "id": "org12", "name": "Babylon Historical Society", "description": "Exploring and celebrating ancient Mesopotamian history." },
-  { "id": "org13", "name": "Maysan Sports Club", "description": "Organizing regional tournaments and athletic events." },
-  { "id": "org14", "name": "Dhi Qar Education Network", "description": "Supporting students and teachers through workshops." },
-  { "id": "org15", "name": "Muthanna Charity Org", "description": "Hosting fundraising events for local communities." },
-  { "id": "org16", "name": "Qadisiyah Women's Association", "description": "Advocating for women's empowerment through events." },
-  { "id": "org17", "name": "Salah al-Din Youth Hub", "description": "A space for youth creativity and collaboration." },
-  { "id": "org18", "name": "Dohuk Tourism Board", "description": "Promoting the natural beauty and events of Dohuk." },
-  { "id": "org19", "name": "Halabja Peace Initiative", "description": "Working towards reconciliation and peace through culture." },
-  { "id": "org20", "name": "Iraq Event Planners", "description": "Professional event management for large-scale festivals." }
+  {
+    "id": "org1",
+    "name": "Iraq Tech Community",
+    "email": "info@iraqtech.org",
+    "avatar_url": "https://picsum.photos/seed/org1/200",
+    "bio_en": "Connecting tech enthusiasts across Iraq.",
+    "bio_ar": "ربط عشاق التكنولوجيا في جميع أنحاء العراق.",
+    "bio_ku": "پەیوەستکردنی ئارەزوومەندانی تەکنەلۆژیا لە سەرانسەری عێراق.",
+    "events_count": 12
+  },
+  {
+    "id": "org2",
+    "name": "Baghdad Arts Council",
+    "email": "arts@baghdad.gov",
+    "avatar_url": "https://picsum.photos/seed/org2/200",
+    "bio_en": "Promoting visual and performing arts in the capital.",
+    "bio_ar": "تعزيز الفنون البصرية والأدائية في العاصمة.",
+    "bio_ku": "پەرەپێدانی هونەرە بینراوەکان و نمایشکارییەکان لە پایتەخت.",
+    "events_count": 8
+  },
+  {
+    "id": "org3",
+    "name": "Erbil Business Forum",
+    "email": "contact@erbilbusiness.com",
+    "avatar_url": "https://picsum.photos/seed/org3/200",
+    "bio_en": "The leading platform for entrepreneurs in Kurdistan.",
+    "bio_ar": "المنصة الرائدة لرواد الأعمال في كردستان.",
+    "bio_ku": "پلاتفۆرمی پێشەنگ بۆ خاوەنکاران لە کوردستان.",
+    "events_count": 5
+  },
+  {
+    "id": "org4",
+    "name": "Basra Music Society",
+    "email": "music@basra.org",
+    "avatar_url": "https://picsum.photos/seed/org4/200",
+    "bio_en": "Celebrating the rich musical heritage of southern Iraq.",
+    "bio_ar": "الاحتفال بالتراث الموسيقي الغني لجنوب العراق.",
+    "bio_ku": "ئاهەنگگێڕان بە میراتی دەوڵەمەندی مۆسیقای باشووری عێراق.",
+    "events_count": 15
+  },
+  {
+    "id": "org5",
+    "name": "Mosul Heritage Foundation",
+    "email": "heritage@mosul.org",
+    "avatar_url": "https://picsum.photos/seed/org5/200",
+    "bio_en": "Preserving and restoring the cultural identity of Mosul.",
+    "bio_ar": "الحفاظ على الهوية الثقافية للموصل واستعادتها.",
+    "bio_ku": "پاراستن و گێڕانەوەی ناسنامەی کولتووری مووسڵ.",
+    "events_count": 10
+  }
 ]

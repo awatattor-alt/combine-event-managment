@@ -2,6 +2,7 @@
 import { ref, provide, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import Navbar from './components/Navbar.vue';
+import Footer from './components/Footer.vue';
 import Toast from './components/Toast.vue';
 import { useEventStore } from './store/eventStore';
 import en from './locales/en.json';
@@ -40,15 +41,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div :class="['min-h-screen bg-slate-50 font-sans', (locale === 'ar' || locale === 'ku') ? 'font-arabic' : '']">
+  <div :class="['min-h-screen bg-[var(--color-bg)] font-sans']">
     <Navbar v-if="!isDashboard" />
-    <main>
+    <main :class="{ 'pb-20': !isDashboard }">
       <router-view v-slot="{ Component }">
         <transition name="fade" mode="out-in">
           <component :is="Component" />
         </transition>
       </router-view>
     </main>
+    <Footer v-if="!isDashboard" />
     <Toast 
       :show="toast.show" 
       :message="toast.message" 
@@ -59,12 +61,6 @@ onMounted(async () => {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
-
-.font-arabic {
-  font-family: 'Noto Sans Arabic', sans-serif;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;
