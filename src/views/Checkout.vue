@@ -7,6 +7,9 @@ import { useUserStore } from '../store/userStore';
 import { CreditCard, ShieldCheck, ArrowLeft, CheckCircle2 } from 'lucide-vue-next';
 import Toast from '../components/Toast.vue';
 
+/**
+ * Checkout page for reserving tickets.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const route = useRoute();

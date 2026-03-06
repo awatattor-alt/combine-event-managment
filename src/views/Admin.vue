@@ -3,6 +3,9 @@ import { inject } from 'vue';
 import { useEventStore } from '../store/eventStore';
 import { Shield, Users, AlertCircle, CheckCircle, XCircle } from 'lucide-vue-next';
 
+/**
+ * Admin moderation dashboard page.
+ */
 const store = useEventStore();
 const t = inject<any>('t');
 const locale = inject<any>('locale');

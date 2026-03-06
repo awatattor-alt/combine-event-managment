@@ -3,6 +3,9 @@ import { inject } from 'vue';
 import { useEventStore } from '../store/eventStore';
 import { MapPin } from 'lucide-vue-next';
 
+/**
+ * Map page placeholder for city/event geospatial visualization.
+ */
 const store = useEventStore();
 const t = inject<any>('t');
 const locale = inject<any>('locale');

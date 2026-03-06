@@ -4,6 +4,9 @@ import { useRouter } from 'vue-router';
 import { Calendar, MapPin, LayoutDashboard, ShieldCheck, Globe, User, Ticket } from 'lucide-vue-next';
 import { useUserStore } from '../store/userStore';
 
+/**
+ * Primary application navigation.
+ */
 const t = inject<any>('t');
 const locale = inject<any>('locale');
 const setLocale = inject<any>('setLocale');
