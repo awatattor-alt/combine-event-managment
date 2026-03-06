@@ -1,9 +1,90 @@
 [
-  { "id": "cat1", "name": "Music", "nameAr": "موسيقى", "nameKu": "مۆسیقا" },
-  { "id": "cat2", "name": "Tech", "nameAr": "تكنولوجيا", "nameKu": "تەکنەلۆژیا" },
-  { "id": "cat3", "name": "Culture", "nameAr": "ثقافة", "nameKu": "کولتور" },
-  { "id": "cat4", "name": "Food", "nameAr": "طعام", "nameKu": "خواردن" },
-  { "id": "cat5", "name": "Education", "nameAr": "تعليم", "nameKu": "پەروەردە" },
-  { "id": "cat6", "name": "Sports", "nameAr": "رياضة", "nameKu": "وەرزش" },
-  { "id": "cat7", "name": "Business", "nameAr": "أعمال", "nameKu": "بزنس" }
+  {
+    "id": "music",
+    "name_en": "Music",
+    "name_ar": "موسيقى",
+    "name_ku": "مۆسیقا",
+    "icon": "Music",
+    "color": "#F59E0B",
+    "name": "Music",
+    "nameAr": "موسيقى",
+    "nameKu": "مۆسیقا"
+  },
+  {
+    "id": "technology",
+    "name_en": "Technology",
+    "name_ar": "تكنولوجيا",
+    "name_ku": "تەکنەلۆژیا",
+    "icon": "Cpu",
+    "color": "#D97706",
+    "name": "Technology",
+    "nameAr": "تكنولوجيا",
+    "nameKu": "تەکنەلۆژیا"
+  },
+  {
+    "id": "sports",
+    "name_en": "Sports",
+    "name_ar": "رياضة",
+    "name_ku": "وەرزش",
+    "icon": "Trophy",
+    "color": "#10B981",
+    "name": "Sports",
+    "nameAr": "رياضة",
+    "nameKu": "وەرزش"
+  },
+  {
+    "id": "culture",
+    "name_en": "Culture",
+    "name_ar": "ثقافة",
+    "name_ku": "کولتور",
+    "icon": "Landmark",
+    "color": "#7C3AED",
+    "name": "Culture",
+    "nameAr": "ثقافة",
+    "nameKu": "کولتور"
+  },
+  {
+    "id": "education",
+    "name_en": "Education",
+    "name_ar": "تعليم",
+    "name_ku": "پەروەردە",
+    "icon": "GraduationCap",
+    "color": "#2563EB",
+    "name": "Education",
+    "nameAr": "تعليم",
+    "nameKu": "پەروەردە"
+  },
+  {
+    "id": "business",
+    "name_en": "Business",
+    "name_ar": "أعمال",
+    "name_ku": "کاروباڕ",
+    "icon": "Briefcase",
+    "color": "#1E3A5F",
+    "name": "Business",
+    "nameAr": "أعمال",
+    "nameKu": "کاروباڕ"
+  },
+  {
+    "id": "food",
+    "name_en": "Food",
+    "name_ar": "طعام",
+    "name_ku": "خواردن",
+    "icon": "Utensils",
+    "color": "#EA580C",
+    "name": "Food",
+    "nameAr": "طعام",
+    "nameKu": "خواردن"
+  },
+  {
+    "id": "art",
+    "name_en": "Art",
+    "name_ar": "فن",
+    "name_ku": "هونەر",
+    "icon": "Palette",
+    "color": "#EC4899",
+    "name": "Art",
+    "nameAr": "فن",
+    "nameKu": "هونەر"
+  }
 ]

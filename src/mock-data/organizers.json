@@ -1,22 +1,52 @@
 [
-  { "id": "org1", "name": "Iraq Tech Community", "description": "Connecting tech enthusiasts across Iraq." },
-  { "id": "org2", "name": "Baghdad Arts Council", "description": "Promoting visual and performing arts in the capital." },
-  { "id": "org3", "name": "Erbil Business Forum", "description": "The leading platform for entrepreneurs in Kurdistan." },
-  { "id": "org4", "name": "Basra Music Society", "description": "Celebrating the rich musical heritage of southern Iraq." },
-  { "id": "org5", "name": "Mosul Heritage Foundation", "description": "Preserving and restoring the cultural identity of Mosul." },
-  { "id": "org6", "name": "Najaf Scholars Association", "description": "Organizing academic and philosophical seminars." },
-  { "id": "org7", "name": "Karbala Youth Volunteers", "description": "Empowering youth through community service and events." },
-  { "id": "org8", "name": "Sulaymaniyah Tech Hub", "description": "Incubating startups and tech talent in Suli." },
-  { "id": "org9", "name": "Kirkuk Cultural Union", "description": "Fostering multicultural dialogue through arts." },
-  { "id": "org10", "name": "Anbar Development Group", "description": "Focused on reconstruction and social events in Anbar." },
-  { "id": "org11", "name": "Diyala Arts Collective", "description": "A group of artists dedicated to local exhibitions." },
-  { "id": "org12", "name": "Babylon Historical Society", "description": "Exploring and celebrating ancient Mesopotamian history." },
-  { "id": "org13", "name": "Maysan Sports Club", "description": "Organizing regional tournaments and athletic events." },
-  { "id": "org14", "name": "Dhi Qar Education Network", "description": "Supporting students and teachers through workshops." },
-  { "id": "org15", "name": "Muthanna Charity Org", "description": "Hosting fundraising events for local communities." },
-  { "id": "org16", "name": "Qadisiyah Women's Association", "description": "Advocating for women's empowerment through events." },
-  { "id": "org17", "name": "Salah al-Din Youth Hub", "description": "A space for youth creativity and collaboration." },
-  { "id": "org18", "name": "Dohuk Tourism Board", "description": "Promoting the natural beauty and events of Dohuk." },
-  { "id": "org19", "name": "Halabja Peace Initiative", "description": "Working towards reconciliation and peace through culture." },
-  { "id": "org20", "name": "Iraq Event Planners", "description": "Professional event management for large-scale festivals." }
+  {
+    "id": "org-1",
+    "name": "Baghdad Arts Council",
+    "email": "hello@baghdadarts.iq",
+    "avatar_url": "https://picsum.photos/seed/org-1/200/200",
+    "bio_en": "A collective producing heritage and performing-arts events in Baghdad.",
+    "bio_ar": "مجموعة تنظم فعاليات التراث والفنون الأدائية في بغداد.",
+    "bio_ku": "کۆمەڵەیەک کە چالاکییە میراتی و هونەری پێشاندانی لە بەغدا ڕێکدەخات.",
+    "events_count": 12
+  },
+  {
+    "id": "org-2",
+    "name": "Iraq Tech Community",
+    "email": "team@iraqtech.community",
+    "avatar_url": "https://picsum.photos/seed/org-2/200/200",
+    "bio_en": "Community-first tech organizer connecting students, founders, and mentors.",
+    "bio_ar": "منظم تقني مجتمعي يربط الطلبة والمؤسسين والمرشدين.",
+    "bio_ku": "ڕێکخەری تەکنەلۆژیای کۆمەڵایەتییە کە خوێندکار و دامەزرێنەر و ڕێنمایی‌کەر دەبەستێتەوە.",
+    "events_count": 9
+  },
+  {
+    "id": "org-3",
+    "name": "Basra Culture House",
+    "email": "info@basraculture.iq",
+    "avatar_url": "https://picsum.photos/seed/org-3/200/200",
+    "bio_en": "Promotes southern Iraqi culture through food, art, and local festivals.",
+    "bio_ar": "تدعم ثقافة جنوب العراق عبر الطعام والفن والمهرجانات المحلية.",
+    "bio_ku": "کولتوری باشووری عێراق بە خواردن و هونەر و فێستیڤاڵی ناوخۆیی بەرز دەکاتەوە.",
+    "events_count": 7
+  },
+  {
+    "id": "org-4",
+    "name": "Nineveh Sports Union",
+    "email": "contact@ninevehsports.iq",
+    "avatar_url": "https://picsum.photos/seed/org-4/200/200",
+    "bio_en": "Organizes youth leagues and inclusive community tournaments.",
+    "bio_ar": "تنظم دوريات الشباب والبطولات المجتمعية الشاملة.",
+    "bio_ku": "لیگەی گەنجان و پاڵەوانێتی کۆمەڵایەتی هەمووگیر ڕێکدەخات.",
+    "events_count": 6
+  },
+  {
+    "id": "org-5",
+    "name": "Najaf Heritage Circle",
+    "email": "admin@najafheritage.iq",
+    "avatar_url": "https://picsum.photos/seed/org-5/200/200",
+    "bio_en": "Supports preservation-focused workshops, arts, and cultural storytelling.",
+    "bio_ar": "تدعم ورش الحفاظ على التراث والفنون والسرد الثقافي.",
+    "bio_ku": "پشتیوانی لە وۆرکشۆپی پاراستنی میرات و هونەر و چیرۆکگێڕانی کولتووری دەکات.",
+    "events_count": 8
+  }
 ]

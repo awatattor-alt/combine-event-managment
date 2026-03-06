@@ -1,0 +1,11 @@
+:root {
+  --color-primary: #D97706;
+  --color-secondary: #1E3A5F;
+  --color-background: #FFFBF5;
+  --color-surface: #FFFFFF;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6B7280;
+  --radius-card: 12px;
+  --radius-button: 8px;
+  --font-family-base: 'Tajawal', ui-sans-serif, system-ui, sans-serif;
+}

@@ -4,7 +4,8 @@
     "events": "Events",
     "map": "Map",
     "dashboard": "Dashboard",
-    "admin": "Admin"
+    "admin": "Admin",
+    "login": "Login"
   },
   "hero": {
     "title": "Discover Iraq's Vibrant Events",
@@ -70,6 +71,15 @@
     "back": "Back",
     "signOut": "Sign Out",
     "loading": "Loading...",
-    "noResults": "No events found matching your criteria."
+    "noResults": "No events found matching your criteria.",
+    "search": "Search",
+    "filter": "Filter",
+    "error": "Something went wrong.",
+    "no_results": "No results found.",
+    "free": "Free",
+    "upcoming": "Upcoming",
+    "city": "City",
+    "category": "Category",
+    "date": "Date"
   }
 }
