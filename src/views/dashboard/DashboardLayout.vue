@@ -1,51 +1,76 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { RouterLink, RouterView, useRoute } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-import { useAuthStore } from '@/stores/authStore';
+import { inject } from 'vue';
+import { LayoutDashboard, PlusCircle, List, Settings, LogOut } from 'lucide-vue-next';
 
-const { t } = useI18n();
-const route = useRoute();
-const authStore = useAuthStore();
-
-onMounted(() => {
-  document.title = 'Dashboard — Iraq Compass';
-});
-
-const tabs = [
-  { to: '/dashboard/events', label: 'dashboard.tabs.my_events' },
-  { to: '/dashboard/create', label: 'dashboard.tabs.create_event' },
-  { to: '/profile', label: 'dashboard.tabs.profile' },
-];
-
-const isActive = (path: string) => route.path === path;
-const welcomeName = computed(() => authStore.currentUser?.name ?? 'Organizer');
+const t = inject<any>('t');
+const locale = inject<any>('locale');
 </script>
 
 <template>
-  <div class="min-h-screen bg-slate-50">
-    <header class="border-b border-slate-200 bg-white">
-      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-        <div>
-          <h1 class="text-xl font-bold text-[#1E3A5F]">{{ t('dashboard.title') }}</h1>
-          <p class="text-sm text-slate-500">{{ t('dashboard.welcome_back', { name: welcomeName }) }}</p>
-        </div>
-        <nav class="flex flex-wrap gap-2">
-          <RouterLink
-            v-for="tab in tabs"
-            :key="tab.to"
-            :to="tab.to"
-            class="rounded-lg px-3 py-2 text-sm font-medium"
-            :class="isActive(tab.to) ? 'bg-[#1E3A5F] text-white' : 'bg-slate-100 text-slate-700'"
-          >
-            {{ t(tab.label) }}
-          </RouterLink>
-        </nav>
+  <div class="min-h-screen bg-slate-50 flex">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-slate-200 hidden lg:flex flex-col">
+      <div class="p-8">
+        <router-link to="/" class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-emerald-600 rounded-lg flex items-center justify-center">
+            <span class="text-white font-black text-xl">I</span>
+          </div>
+          <span class="text-xl font-black text-slate-900 tracking-tighter">Compass</span>
+        </router-link>
       </div>
-    </header>
 
-    <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
-      <RouterView />
+      <nav class="flex-1 px-4 space-y-2">
+        <router-link 
+          to="/dashboard" 
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
+          active-class="bg-emerald-50 !text-emerald-600 font-bold"
+          exact
+        >
+          <LayoutDashboard :size="20" />
+          {{ t.dashboard.overview }}
+        </router-link>
+        <router-link 
+          to="/dashboard/my-events" 
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
+          active-class="bg-emerald-50 !text-emerald-600 font-bold"
+        >
+          <List :size="20" />
+          {{ t.dashboard.myEvents }}
+        </router-link>
+        <router-link 
+          to="/dashboard/create-event" 
+          class="flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-slate-50 rounded-xl transition-all"
+          active-class="bg-emerald-50 !text-emerald-600 font-bold"
+        >
+          <PlusCircle :size="20" />
+          {{ t.dashboard.createEvent }}
+        </router-link>
+      </nav>
+
+      <div class="p-4 border-t border-slate-100">
+        <button class="w-full flex items-center gap-3 px-4 py-3 text-slate-600 hover:bg-red-50 hover:text-red-600 rounded-xl transition-all">
+          <LogOut :size="20" />
+          {{ t.common.signOut }}
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+      <header class="bg-white border-b border-slate-200 px-8 py-4 flex justify-between items-center sticky top-0 z-10">
+        <h2 class="font-bold text-slate-900">{{ locale.value === 'en' ? 'Organizer Portal' : (locale.value === 'ar' ? 'بوابة المنظم' : 'پۆرتالی ڕێکخەر') }}</h2>
+        <div class="flex items-center gap-4">
+          <div class="text-right hidden sm:block">
+            <p class="text-sm font-bold text-slate-900">Cultural Hub IQ</p>
+            <p class="text-xs text-slate-500">{{ locale.value === 'en' ? 'Organizer Account' : (locale.value === 'ar' ? 'حساب المنظم' : 'هەژماری ڕێکخەر') }}</p>
+          </div>
+          <div class="w-10 h-10 bg-slate-100 rounded-full border-2 border-white shadow-sm"></div>
+        </div>
+      </header>
+
+      <div class="p-8">
+        <router-view></router-view>
+      </div>
     </main>
   </div>
 </template>
